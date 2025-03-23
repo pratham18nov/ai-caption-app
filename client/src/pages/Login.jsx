@@ -42,12 +42,13 @@ const Login = () => {
             body: JSON.stringify(data)
         })
         const dataApi = await dataResponse.json()
-
+        console.log("dataApilogin", dataApi)
         if(dataApi.success){
             console.log("fetched data", dataApi)
             localStorage.setItem("authToken", dataApi.data) //here data===token as passed from backend
             // console.log("authToken", dataApi.data)
-
+// need to used here redux or recoil to store the data
+     localStorage.setItem("userId", dataApi.user.userId)
             toast.success(dataApi.message)
             navigate('/')
         }
