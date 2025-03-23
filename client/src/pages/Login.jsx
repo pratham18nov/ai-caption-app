@@ -1,0 +1,151 @@
+import React, { useState } from 'react'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom'
+import Carousel from '../components/Carousel'
+import img1 from '../assets/crsl-l1.jpg'
+import img2 from '../assets/crsl-l2.jpg'
+import img3 from '../assets/crsl-l3.jpg'
+import imgWelcome from '../assets/welcome-2.jpg'
+import SummaryApi from '../helpers/SummaryApi'
+import { toast } from 'react-toastify'
+
+const Login = () => {
+    const [showPassword, setShowPassword] = useState(false)
+    const [data, setData] = useState({
+        email: "",
+        password: ""
+    })
+    const navigate = useNavigate()
+    const images = [img1, img3, img2, imgWelcome]
+
+    const handleOnChange = (e) =>{
+        const {name, value} = e.target
+        setData((prev)=>{
+            return {
+                ...prev,
+                [name] : value
+            }
+        })
+    }
+    const handleSubmit = async(e) =>{
+        e.preventDefault()
+
+        console.log("The input data is: ", data)
+        // console.log("The input data is: ", data)
+
+        const dataResponse = await fetch(SummaryApi.login.url, {
+            method: SummaryApi.login.method,
+            credentials: "include",
+            headers: {
+                "content-type" : "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        const dataApi = await dataResponse.json()
+
+        if(dataApi.success){
+            console.log("fetched data", dataApi)
+            localStorage.setItem("authToken", dataApi.data) //here data===token as passed from backend
+            // console.log("authToken", dataApi.data)
+
+            toast.success(dataApi.message)
+            navigate('/')
+        }
+        if(dataApi.error){
+            toast.error(dataApi.message)
+        }
+
+    }
+
+
+    return (
+        <section className='w-full h-fit flex justify-center items-center py-4 mt-4 '>
+            
+            <section className='w-1/2 max-md:w-full flex justify-center'>
+                <div className='w-[90%] flex flex-col gap-4'>
+                    <p className='text-5xl max-sm:text-3xl font-bold text-center'>Login</p>
+                    <span className='w-full text-xl max-sm:text-sm text-slate-700 dark:text-slate-300 -mt-2 mb-6 text-center tracking-[0.5rem]'>to get started</span>
+                    
+                    {/* <div className='h-28 w-28 rounded-full mx-auto flex justify-center items-center object-contain border-[1px] border-slate-400 dark:border-[#413c3c] overflow-hidden relative'>
+                        <img src={data.profilePic || defaultUser} alt='user profile' className='h-full w-full rounded-full'/>
+                        <input id='upload-pic' type='file' name='profilePic' accept="image/*" className='hidden' onChange={handleUploadPic}/>
+                        <label htmlFor='upload-pic' className='absolute w-full bg-opacity-80 text-center bottom-0 '>
+                            <span className='w-full bg-slate-300 dark:bg-[#322f2f] text-black dark:text-[#dadada] bg-opacity-100 z-10 p-1 rounded'>{data.profilePic==="" ? ("Upload") : ("Change")}</span>
+                        </label>
+                    </div> */}
+
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+                        {/* <div className='flex gap-4'>
+                            <input placeholder='First name' name='firstName' required className='input-field' value={data.firstName} onChange={handleOnChange}/>
+                            <input placeholder='Last name' name='lastName' required className='input-field' value={data.lastName} onChange={handleOnChange} />
+                        </div> */}
+                        <input placeholder='Email' type='email' name='email' required className='input-field' value={data.email} onChange={handleOnChange} />
+                        <label htmlFor="password" className=' flex justify-between items-center relative'>
+                            <input id='password' placeholder='password' name='password' required value={data.password} onChange={handleOnChange} type={showPassword ? "text" : "password"} className='input-field outline-none border-0 ' />
+                            <i onClick={() => setShowPassword((prev) => !prev)} className='cursor-pointer absolute right-4'> {showPassword ? (<FaEyeSlash />) : (<FaEye />)}
+                            </i>
+                        </label>
+                        {/* <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' /> */}
+                        <button className='btn'>Log In</button>
+                    </form>
+
+                    <span>Don't have an account? <Link to='/signup'><span className='hover:underline'>Sign Up</span></Link></span>
+                </div>
+
+            </section>
+
+            <div className='w-1/2 h-full flex my-auto justify-center items-center max-md:hidden'>
+                <Carousel images={images} />
+            </div>
+        </section>
+        // <section id='login' className='mt-2'>
+        //     <div>
+    
+        //         <div className='bg-white p-4 w-full max-w-sm mx-auto'>
+        //             <div className='w-20 h-20 mx-auto'>
+        //                 {/* <img src={logo} alt='signIn'/> */}
+        //             </div>
+    
+        //             <form className='pt-6 flex flex-col gap-2' onSubmit={handleSubmit}>
+        //                 <div className='grid'>
+        //                     <label>Email: </label>
+        //                     <div className='bg-slate-100 p-2'>
+        //                         <input 
+        //                             type='email' 
+        //                             placeholder='Enter your email' 
+        //                             name='email'
+        //                             value={data.email}
+        //                             onChange={handleOnChange}
+        //                             className='w-full h-full outline-none bg-transparent'/>
+        //                     </div>
+        //                 </div>
+        //                 <div>
+        //                     <label>Password: </label>
+        //                     <div className='bg-slate-100 p-2 flex'>
+        //                         <input 
+        //                             type={showPassword ? "text":"password"} 
+        //                             placeholder='Enter password' 
+        //                             name='password'
+        //                             value={data.password}
+        //                             onChange={handleOnChange}
+        //                             className='w-full h-full outline-none bg-transparent'/>
+        //                         <div className='cursor-pointer text-xl' onClick={()=> setShowPassword((prev) => !prev)}>
+        //                             <span>
+        //                                 {showPassword ? (<FaEyeSlash/>) : (<FaEye/>)}
+        //                             </span>
+        //                         </div>
+        //                     </div>
+        //                     <Link to={"/forgot-password"} className='block w-fit ml-auto hover:underline hover:text-red-600'>Forgot password ?</Link> 
+        //                 </div>
+    
+        //                 <button className='bg-red-600 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:bg-red-700 mx-auto block mt-6'>Login</button>
+        //             </form>
+    
+        //             <p className='my-5'>Didn't have an account? <Link to={"/sign-up"} className='text-red-500 hover:text-red-700 hover:underline'>Sign Up</Link></p>
+        //         </div>
+        //     </div>
+        // </section>
+      )
+}
+
+export default Login
