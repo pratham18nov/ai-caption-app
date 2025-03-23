@@ -2,8 +2,8 @@ const userModel = require('../models/userModel')
 
 async function userDetailsController(req, res){
     try {
-        const userId = req.body.userId || req.params.userId || req.userId; // More secure extraction
-
+        const userId =  req.query.userId; // More secure extraction
+     
         if (!userId) {
             console.log("userId not found in userDetailsController");
             return res.status(400).json({
