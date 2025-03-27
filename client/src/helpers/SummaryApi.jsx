@@ -1,4 +1,6 @@
-const backendDomain = "http://localhost:8080"
+// const backendDomain = "http://localhost:8080"
+// const backendDomain = "https://pic-lingo-server.vercel.app"
+const backendDomain = ""
 
 const SummaryApi = {
     signUp:{
@@ -17,7 +19,10 @@ const SummaryApi = {
         url: `${backendDomain}/api/user-logout`,
         method: "GET" 
     },
-    
+    saveCaptions:{
+        url: `${backendDomain}/api/save-caption`,
+        method: "POST"
+    }
 }
 
 export default SummaryApi

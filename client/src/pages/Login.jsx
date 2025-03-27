@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import Carousel from '../components/Carousel'
@@ -8,6 +8,7 @@ import img3 from '../assets/crsl-l3.jpg'
 import imgWelcome from '../assets/welcome-2.jpg'
 import SummaryApi from '../helpers/SummaryApi'
 import { toast } from 'react-toastify'
+import { UserContext } from '../context/UserContext'
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -15,6 +16,7 @@ const Login = () => {
         email: "",
         password: ""
     })
+    const {setUserId} = useContext(UserContext)
     const navigate = useNavigate()
     const images = [img1, img3, img2, imgWelcome]
 
@@ -48,8 +50,10 @@ const Login = () => {
             localStorage.setItem("authToken", dataApi.data) //here data===token as passed from backend
             // console.log("authToken", dataApi.data)
 // need to used here redux or recoil to store the data
-     localStorage.setItem("userId", dataApi.user.userId)
+            localStorage.setItem("userId", dataApi.user.userId)
             toast.success(dataApi.message)
+            setUserId(dataApi.user.userId)
+            // navigate('/', {userId: dataApi.user.userId})
             navigate('/')
         }
         if(dataApi.error){
@@ -61,7 +65,7 @@ const Login = () => {
 
     return (
         <section className='w-full h-fit flex justify-center items-center py-4 mt-4 '>
-            
+
             <section className='w-1/2 max-md:w-full flex justify-center'>
                 <div className='w-[90%] flex flex-col gap-4'>
                     <p className='text-5xl max-sm:text-3xl font-bold text-center'>Login</p>

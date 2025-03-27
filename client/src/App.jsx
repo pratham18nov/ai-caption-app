@@ -12,14 +12,17 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from './pages/Login';
 import { useEffect, useState } from 'react';
 import SummaryApi from './helpers/SummaryApi';
+import Test from './pages/Test';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchUserDetails } from './store/userSlice';
 
 function App() {
   const [userDetails, setUserDetails] = useState(null);
+  const userId = localStorage.getItem("userId");
 
   const fetchUserDetails = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const userId = localStorage.getItem("userId");
 
       if (!token || !userId) {
         console.warn("No token or userId found in localStorage");
@@ -51,7 +54,7 @@ function App() {
     }
   };
 
-  console.log("userDetails vinay:", userDetails);
+  console.log("userDetails: ", userDetails);
   // Fetch user details on mount
   useEffect(() => {
     fetchUserDetails();
@@ -64,8 +67,8 @@ function App() {
 
   return (
     <Router>
-      <ToastContainer position="top-center" />
-      <Header />
+      <ToastContainer position="top-center"/>
+      <Header dp={userDetails?.profilePic}/>
       <div className="min-h-screen pt-16 overflow-x-hidden relative flex flex-col">
         <div className="flex-grow">
           <Routes>
@@ -75,6 +78,8 @@ function App() {
             <Route path="/upload" element={<Upload />} />
             <Route path="/about" element={<About />} />
             <Route path="/results" element={<Results />} />
+
+            <Route path="/testing" element={<Test/>} />
           </Routes>
         </div>
       </div>

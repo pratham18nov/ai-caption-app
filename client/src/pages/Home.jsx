@@ -27,6 +27,8 @@ const Home = () => {
 
   return (
     <section className='h-full w-full'>
+        <Link to='/testing'>Test</Link>
+
         {/* hero section */}
         <section className='min-h-[80vh] w-full flex max-md:flex-col-reverse items-center max-md:justify-center px-12 gap-12 max-md:gap-4 my-12 max-md:my-12'>
           <div className='p-12 lg:max-w-1/2'>
@@ -73,7 +75,7 @@ const Home = () => {
 
         {/* Ready to get started */}
         <section className='h-[65vh] w-full flex flex-col justify-center items-center'>
-          <p className='text-5xl font-bold text-center'>Ready to Get Started?</p>
+          <p className='text-5xl font-bold text-center text-gradient'>Ready to Get Started?</p>
           <p className='text-xl text-center text-slate-700 dark:text-slate-300 mt-2'>Upload your first image and experience the power of AI-generated caption recommendations.</p>
           <Link to='/upload' className='btn mt-10 flex justify-center items-center gap-2 text-gray-900 dark:text-white/87'>
             <i className='text-lg text-gray-900 dark:text-white/87'><FiUpload/></i> 

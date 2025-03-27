@@ -15,6 +15,7 @@ const images = [imgwelcome, img2, img3, img1];
 
 const SignUp = () => {
     const navigate = useNavigate()
+    const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     // const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [data, setData] = useState({
@@ -49,6 +50,9 @@ const SignUp = () => {
 
     const handleOnChange = (e) => {
         const { name, value } = e.target
+        if(name==="password"){
+            setError(value.length < 8 ? "Minimum 8 characters required" : "");
+        }
         setData((prev) => {
             return {
                 ...prev,
@@ -62,7 +66,10 @@ const SignUp = () => {
         console.log("The input data is: ", data)
         // console.log("the url is: ", SummaryApi.signUp.url, SummaryApi.signUp.method)
 
-        if (data.password === data.confirmPassword) {
+        if(data.password.length<8){
+            toast.warning("Password length is less than 8")
+        }
+        else if (data.password === data.confirmPassword) {
             const dataResponse = await fetch(SummaryApi.signUp.url, {
                 method: SummaryApi.signUp.method,
                 headers: {
@@ -83,7 +90,7 @@ const SignUp = () => {
             }
         }
         else {
-            toast.error("Please check password and confirm password")
+            toast.warning("Please check password and confirm password")
         }
     }
 
@@ -125,6 +132,7 @@ const SignUp = () => {
                             <i onClick={() => setShowPassword((prev) => !prev)} className='cursor-pointer absolute right-4'> {showPassword ? (<FaEyeSlash />) : (<FaEye />)}
                             </i>
                         </label>
+                            {error && <p className='text-red-400 -mt-4 text-sm ml-2'>{error}</p>}
                         <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' />
                         <button className='btn'>Create account</button>
                     </form>

@@ -8,6 +8,46 @@ import { SlPeople } from 'react-icons/sl'
 import { Link } from 'react-router-dom'
 
 const About = () => {
+  const worksArray = [
+    {
+      icon: <FiUpload/>,
+      iconTitle: "Upload",
+      desc: "Upload your image through our simple and intuitive interface."
+    },
+    {
+      icon: <LuBrainCircuit/>,
+      iconTitle: "Analyze",
+      desc: "Our AI analyzes your image, identifying objects, scenes, emotions, and context."
+    },
+    {
+      icon: <GiSparkles/>,
+      iconTitle: "Generate",
+      desc: "The system generates multiple caption options based on the image analysis."
+    },
+    {
+      icon: <FaEnvelopeOpenText/>,
+      iconTitle: "Choose",
+      desc: "You select the caption that best fits your needs or use our suggestions as inspiration."
+    }
+  ]
+  const featuresArray =[
+    {
+      icon: <LuZap/>,
+      iconName: "Instant Results",
+      desc: "Get caption suggestions in seconds, no matter how complex your image is."
+    },
+    {
+      icon: <LuBrainCircuit/>,
+      iconName: "Contextual Understanding",
+      desc: "Our AI understands the context, mood, and elements in your image for relevant captions."
+    },
+    {
+      icon: <SlPeople/>,
+      iconName: "Audience Focused",
+      desc: "Captions are designed to engage your audience and increase social media interaction."
+    },
+  ]
+
   return (
     <section className='w-screen mt-24 overflow-x-hidden '>
       <p className='text-5xl font-bold text-center'>About PicLingo</p>
@@ -19,46 +59,22 @@ const About = () => {
           <p className=' text-2xl font-bold max-md:text-center'>Our Mission</p>
           <p className='text-slate-700 dark:text-slate-300 max-md:text-center '>We believe that every image tells a story, and the right caption can enhance that story. Our mission is to help you find the perfect words to complement your visual content, saving you time and boosting engagement.</p>
           <p className=' text-2xl font-bold max-md:text-center'>How It Works</p>
-          <div className='flex max-md:flex-col items-center gap-2'>
-            <div className='w-12 h-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
-              <i className='text-xl'><FiUpload/></i>
-            </div>
-            <div>
-              <p className='text-lg font-bold max-md:text-center'>Upload</p>
-              <p className='text-sm font-sm text-slate-700 dark:text-slate-300 max-md:text-center'>Upload your image through our simple and intuitive interface.</p>
-            </div>
-          </div>
-
-          <div className='flex max-md:flex-col items-center gap-2'>
-            <div className='w-12 h-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
-              <i className='text-xl'><LuBrainCircuit/></i>
-            </div>
-            <div>
-              <p className='text-lg font-bold max-md:text-center'>Analyze</p>
-              <p className='text-sm font-sm text-slate-700 dark:text-slate-300 max-md:text-center'>Our AI analyzes your image, identifying objects, scenes, emotions, and context.</p>
-            </div>
-          </div>
-
-          <div className='flex max-md:flex-col items-center gap-2'>
-            <div className='w-12 h-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
-              <i className='text-xl'><GiSparkles/></i>
-            </div>
-            <div>
-              <p className='text-lg font-bold max-md:text-center'>Generate</p>
-              <p className='text-sm font-sm text-slate-700 dark:text-slate-300 max-md:text-center'>The system generates multiple caption options based on the image analysis.</p>
-            </div>
-          </div>
-
-          <div className='flex max-md:flex-col items-center gap-2'>
-            <div className='w-12 h-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
-              <i className='text-xl'><FaEnvelopeOpenText/></i>
-            </div>
-            <div>
-              <p className='text-lg font-bold max-md:text-center'>Choose</p>
-              <p className='text-sm font-sm text-slate-700 dark:text-slate-300 max-md:text-center'>You select the caption that best fits your needs or use our suggestions as inspiration.</p>
-            </div>
-          </div>
-        </div>
+          {
+            worksArray.map((data, index)=>{
+              return(
+                <div key={index} className='flex max-md:flex-col items-center gap-2'>
+                  <div className='w-12 h-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#202020] text-slate-700 dark:text-slate-400'>
+                    <i className='text-xl'>{data.icon}</i>
+                  </div>
+                  <div>
+                    <p className='text-lg font-bold max-md:text-center'>{data.iconTitle}</p>
+                    <p className='text-sm font-sm text-slate-700 dark:text-slate-300 max-md:text-center'>{data.desc}</p>
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div> 
 
         <div className='max-w-[620px] max-h-[480px] overflow-hidden rounded-lg object-scale-down'>
           <img src={aboutImg} alt='' className='w-full object-contain'/>
@@ -68,30 +84,20 @@ const About = () => {
       {/* key features */}
       <section className='w-[90%] mx-auto py-8'>
         <p className='text-2xl font-bold text-center'>Key Features</p>
-        <div className='py-4 mt-4 flex max-md:flex-col justify-around items-around max-md:items-center max-md:gap-4'>
-          <div className='w-[30%] max-md:w-[80%] bg-slate-300 dark:bg-[#202020] border border-slate-700 rounded-lg flex flex-col justify-around gap-2 p-6'>
-            <div className='h-12 w-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
-              <i className='text-3xl '><LuZap/></i>
-            </div>
-            <p className='text-xl font-bold'>Instant Results</p>
-            <p className='text-slate-700 dark:text-slate-300'>Get caption suggestions in seconds, no matter how complex your image is.</p>
-          </div>
-
-          <div className='w-[30%] max-md:w-[80%] bg-slate-300 dark:bg-[#202020] border border-slate-700 rounded-lg flex flex-col justify-around gap-2 p-6'>
-            <div className='h-12 w-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
-              <i className='text-3xl '><LuBrainCircuit/></i>
-            </div>
-            <p className='text-xl font-bold'>Contextual Understanding</p>
-            <p className='text-slate-700 dark:text-slate-300'>Our AI understands the context, mood, and elements in your image for relevant captions.</p>
-          </div>
-
-          <div className='w-[30%] max-md:w-[80%] bg-slate-300 dark:bg-[#202020] border border-slate-700 rounded-lg flex flex-col justify-around gap-2 p-6'>
-            <div className='h-12 w-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
-              <i className='text-3xl '><SlPeople/></i>
-            </div>
-            <p className='text-xl font-bold'>Audience Focused</p>
-            <p className='text-slate-700 dark:text-slate-300'>Captions are designed to engage your audience and increase social media interaction.</p>
-          </div>
+        <div className='py-4 mt-4 flex max-md:flex-col justify-around items-around max-md:items-center max-md:gap-4'>  
+          {
+            featuresArray.map((data, index)=>{
+              return(
+                <div key={index} className='w-[30%] max-md:w-[80%] bg-slate-300 dark:bg-[#202020] border border-slate-700 rounded-lg flex flex-col justify-around gap-2 p-6'>
+                  <div className='h-12 w-12 rounded-full flex justify-center items-center bg-[#64748B] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
+                    <i className='text-3xl '>{data.icon}</i>
+                  </div>
+                  <p className='text-xl font-bold'>{data.iconTitle}</p>
+                  <p className='text-slate-700 dark:text-slate-300'>{data.desc}</p>
+                </div>
+              )
+            })
+          }
         </div>
       </section>
 

@@ -33,7 +33,7 @@ const Carousel = ({images}) => {
           {images.map((_, index) => (
             <div key={index}
               className={`h-[3px] w-20 transition-all ${
-                index === currentIndex ? "bg-gray-500 dark:bg-white" : "bg-white dark:bg-gray-500"
+                index === currentIndex ? "bg-white" : "bg-gray-500"
               }`}
             ></div>
           ))}
