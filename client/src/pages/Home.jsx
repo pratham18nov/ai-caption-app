@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <section className='h-full w-full'>
-        <Link to='/testing'>Test</Link>
+        {/* <Link to='/testing'>Test</Link> */}
 
         {/* hero section */}
         <section className='min-h-[80vh] w-full flex max-md:flex-col-reverse items-center max-md:justify-center px-12 gap-12 max-md:gap-4 my-12 max-md:my-12'>
