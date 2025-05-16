@@ -107,7 +107,7 @@ const SignUp = () => {
                     
                     {/* input profile image */}
                     <div className='h-28 w-28 rounded-full mx-auto flex justify-center items-center object-contain border-[1px] border-slate-400 dark:border-[#413c3c] overflow-hidden relative'>
-                        <img src={data.profilePic || defaultUser} alt='user profile' className='h-full w-full rounded-full'/>
+                        <img src={data.profilePic || defaultUser} alt='user profile' className='h-full w-full object-cover rounded-full'/>
                         <input id='upload-pic' type='file' name='profilePic' accept="image/*" className='hidden' onChange={handleUploadPic}/>
                         <label htmlFor='upload-pic' className='absolute w-full bg-opacity-80 text-center bottom-0 cursor-pointer'>
                             <span className='w-full bg-slate-300 dark:bg-[#322f2f] text-black dark:text-[#dadada] bg-opacity-100 z-10 p-1 rounded'>

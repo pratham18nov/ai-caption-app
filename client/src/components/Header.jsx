@@ -73,7 +73,7 @@ const Header = ({dp}) => {
             { 
               user ? (
                 <span className=' inline-block text-gray-900 dark:text-white/87 relative '>
-                  <img src={dp || userImg} alt='profile' className='w-10 h-10 rounded-full cursor-pointer' onClick={()=>setShowLogout((prev)=>!prev)}/>
+                  <img src={dp || userImg} alt='profile' className='w-10 h-10 object-cover rounded-full cursor-pointer' onClick={()=>setShowLogout((prev)=>!prev)}/>
                   {
                     showLogout && <div ref={logoutRef} className='btn absolute -ml-6 mt-2 before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:w-5 before:h-5 before:bg-[#94A3B8] dark:before:bg-[#322f2f] before:rotate-45 before:clip-path-[polygon(50%_0%,0%_100%,100%_100%)]' onClick={handleLogout}>Logout</div>
                   }

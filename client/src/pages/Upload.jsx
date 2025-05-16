@@ -1,31 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiUpload } from 'react-icons/fi'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 import { LuImage } from 'react-icons/lu'
 import { Link, useNavigate } from 'react-router-dom'
+import GenerateCaptions from '../components/GenerateCaptions'
+import imageTobase64 from '../helpers/imageTobase64'
+import TypewriterText from '../animations/TypewriterText'
+import ColorExtractor from '../components/ColorExtractor'
 
 const Upload = () => {
   const [imageArray, setImageArray] = useState([])
+  const [dominantColor, setDominantColor] = useState(null)
+  const [invertedColor, setInvertedColor] = useState(null)
   const navigate = useNavigate();
+  
 
-  // const handleChange = (e) =>{
-  //   const image = e.target.files[0]
-  //   console.log('image uploaded', image)
-  //   if(image){
-  //     const imageURL = URL.createObjectURL(image)
-  //     setImageArray([imageURL])
-  //   }
-  // }
-  const handleChange = (e) =>{
+  const handleChange = async(e) =>{
     const image = e.target.files[0]
     console.log('image uploaded', image)
 
     if(image){
-      const reader = new FileReader()
-      reader.readAsDataURL(image) //convert to Base64
-      reader.onloadend = () =>{
-        setImageArray(reader.result) //store Base64 string
+      try {
+        const color = await ColorExtractor(image)
+        console.log('Dominant color:', color)
+        // Use this color in your state or UI
+        setDominantColor(color)
+        console.log('color extracted', dominantColor)
+      } catch (error) {
+        console.error('Color extraction failed:', error)
       }
+
+      const convert = await imageTobase64(image)
+      setImageArray(convert)
     }
   }
 
@@ -33,15 +39,32 @@ const Upload = () => {
     setImageArray([])
   }
 
-  const genCaps = () =>{
-    navigate('/results', {state: {message: imageArray}})
+  useEffect(() => {
+    if (dominantColor) {
+      console.log('color extracted (updated):', dominantColor)
+      setInvertedColor(getInvertedColor(dominantColor))
+      console.log('inverted color extracted (updated):', invertedColor)
+    }
+  }, [dominantColor])
+
+  const getInvertedColor = (rgbString) =>{
+    const [r,g,b] = rgbString.match(/\d+/g).map(Number)
+    const opposite = `rgb(${255-r}, ${255-g}, ${255-b})`
+    return opposite
+  }
+  
+
+  const genCaps = async() =>{
+    const captions = await GenerateCaptions(imageArray)
+    navigate('/results', {state: {image: imageArray, dominantColor:dominantColor, invertedColor:invertedColor}})
+    console.log("captions generated", captions)
   }
   
   return (
     <section className='h-full w-full flex flex-col jutify-center gap-2 items-center py-15'>
-      <p className='text-5xl max-sm:text-3xl font-bold text-center'>Upload Your Image</p>
+      <div className='text-5xl max-sm:text-3xl font-bold text-center'><TypewriterText text="Upload Your Image"/></div>
       <p className='text-xl max-sm:text-sm text-slate-700 dark:text-slate-300 mt-2 text-center'>Upload an image to get AI-powered caption recommendations.</p>
-      <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 flex flex-col justify-around items-center gap-4'>
+      <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 flex flex-col justify-around items-center gap-4 relative'>
         <div className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 rounded-lg flex justify-center items-center'>
           {
             imageArray.length===0 ? (
@@ -61,17 +84,21 @@ const Upload = () => {
               <div className='relative'>
                 <div className='absolute -top-2 -right-6 text-2xl cursor-pointer' onClick={removeImage}><IoMdCloseCircleOutline/></div>
                 <div className='max-w-full max-h-56 flex justify-center items-center '>
-                  <img src={imageArray} alt='imageArray' className='w-full max-h-56 object-contain'/>
+                  <img src={imageArray} alt='imageArray' className='w-full max-h-56 object-cover'/>
                 </div>
               </div>
             )
           }
         </div>
 
+        {/* color spill */}
+        {imageArray[0] && <div className="absolute -inset-5 blur-3xl opacity-25 -z-10 transition-all duration-1500 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
+
+
         <button className='w-84 max-sm:w-70 text-center'>
           {
             imageArray.length !== 0 ? (
-              <div onClick={genCaps}><span className='btn block text-gray-900 dark:text-white/87'>Generate Captions</span></div>
+              <div onClick={genCaps} style={{border:`2px solid ${invertedColor}`}}><span className='btn block text-gray-900 dark:text-white/87' >Generate Captions</span></div>
             ) : (
               <span className='btn-disabled block'>Generate Captions</span>
             )

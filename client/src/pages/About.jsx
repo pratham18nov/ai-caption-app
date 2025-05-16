@@ -6,6 +6,7 @@ import { LuBrainCircuit, LuZap } from 'react-icons/lu'
 import { FaEnvelopeOpenText } from 'react-icons/fa'
 import { SlPeople } from 'react-icons/sl'
 import { Link } from 'react-router-dom'
+import TypewriterText from '../animations/TypewriterText'
 
 const About = () => {
   const worksArray = [
@@ -50,7 +51,7 @@ const About = () => {
 
   return (
     <section className='w-screen mt-24 overflow-x-hidden '>
-      <p className='text-5xl font-bold text-center'>About PicLingo</p>
+      <div className='text-5xl font-bold text-center'> <TypewriterText text="About PicLingo"/> </div>
       <p className='max-w-[80%] sm:max-w-[50%] text-xl text-center text-slate-700 dark:text-slate-300 mt-2 mx-auto py-2'>Our AI-powered image caption recommendation system helps content creators, marketers, and social media enthusiasts generate engaging captions for their images.</p>
 
       {/* our mission */}
@@ -77,7 +78,7 @@ const About = () => {
         </div> 
 
         <div className='max-w-[620px] max-h-[480px] overflow-hidden rounded-lg object-scale-down'>
-          <img src={aboutImg} alt='' className='w-full object-contain'/>
+          <img src={aboutImg} alt='' className='w-full object-cover'/>
         </div>
       </section>
 
@@ -103,7 +104,7 @@ const About = () => {
 
       {/* Ready to try it */}
       <section className='min-w-[40%] mx-auto flex flex-col gap-4 justify-center items-center py-10 mb-10'>
-        <p className='text-2xl font-bold text-center'>Ready to Try It?</p>
+        <div className='text-2xl font-bold text-center'> <TypewriterText text="Ready to Try It?"/> </div>
         <p className='text-slate-700 dark:text-slate-300 text-center max-w-[80%]'>Upload your first image and experience the power of AI-generated caption recommendations.</p>
         <Link to='/upload' className='btn w-[40%] max-w-[420px] max-sm:w-[60%] flex justify-center items-center gap-2 text-gray-900 dark:text-white/87'>
           <i className='text-gray-900 dark:text-white/87'><FiUpload/></i>

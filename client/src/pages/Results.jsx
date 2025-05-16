@@ -5,10 +5,12 @@ import { FaCheck } from 'react-icons/fa'
 import { LuCopy } from 'react-icons/lu'
 import { Link, useLocation } from 'react-router-dom'
 import SummaryApi from '../helpers/SummaryApi'
+import {motion} from 'motion/react'
+import TypewriterText from '../animations/TypewriterText';
 
 const Results = () => {
   const location = useLocation()
-  const image = location.state?.message
+  const {image, dominantColor,  invertedColor} = location.state || {}
   // console.log('image Received', image)
 
   const [copiedIndex, setCopiedIndex] = useState(null)
@@ -27,7 +29,6 @@ const Results = () => {
   }
 
   const handleLike = async(event, index) =>{
-    
     try{
       setLikedIndex((prev)=>
         prev.includes(index) ? prev.filter((i)=>i!==index) : [...prev, index]
@@ -109,7 +110,7 @@ const Results = () => {
         <div className='h-full w-[55vw] max-lg:w-[80vw] max-md:w-[100vw] flex justify-around gap-8 max-lg:flex-col max-lg:items-center'>
 
           {/* image part */}
-          <div className='h-full w-[38%] max-lg:w-[90%] border border-slate-700 rounded-lg'>
+          <div className='h-full w-[38%] max-lg:w-[90%] border border-slate-700 rounded-lg relative'>
             <div className='p-2'>
               <img src={image} alt='image' className='mx-auto rounded-lg'/>
             </div>
@@ -118,23 +119,31 @@ const Results = () => {
               {
                 keywordsArray.map((data, index)=>{
                   return(
-                    <span key={index} className='h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center'>{data}</span>
+                    <span key={index} className='h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center' style={{border:`1px solid ${invertedColor}`}}>{data}</span>
                   )
                 })
               }
               
             </div>
+
+            {/* color spill */}
+            <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 transition-all duration-1500 rounded-lg" style={{backgroundColor:dominantColor||'transparent'}}> </div>
+            
           </div>
 
           {/* caption part */}
-          <div className='h-fit w-[57%] max-lg:w-[75%] border border-slate-700 rounded-lg p-4'>
-            <span className='text-2xl font-bold text-gradient'>Suggested Captions</span>
+          <div className='h-fit w-[57%] max-lg:w-[75%] max-sm:w-[90vw] border border-slate-700 rounded-lg p-4'>
+            <span className='pt-4 text-2xl font-bold text-gradient'><TypewriterText text="Suggested Captions"/> </span>
             <div className='flex flex-col gap-4 mt-4'>
               {
                 capArray.length ? (
                   capArray.map((data, index)=>{
                     return(
-                      <div key={index} className='border border-slate-700 rounded-lg p-4 flex flex-col gap-4'>
+                      <motion.div key={index} initial={{y:-index*(158)}} 
+                        animate={{y:index*0}} 
+                        transition={{duration:1, delay:index*1/3,}}
+                        style={{zIndex: data.length-index, border:`1px solid ${invertedColor}`}}
+                        className='border rounded-lg p-4 flex flex-col gap-4 bg-[#E2E8F0] dark:bg-[#1a1a1a]'>
                         <p className='text-slate-700 dark:text-slate-300' value={data.title}>{data.title}</p>
                         <div className='flex justify-between max-sm:flex-row-reverse'>
                           <div className='flex gap-6 max-sm:hidden'>
@@ -151,7 +160,7 @@ const Results = () => {
                             <p id='copy-text' className='text-slate-700 dark:text-slate-300 ' onClick={()=>copyText(data.title, index)}>{copiedIndex===index ? ('Copied') : ('Copy')}</p>
                           </div>
                         </div>
-                      </div> 
+                      </motion.div> 
                     )
                   })
                 ) : (
@@ -164,9 +173,15 @@ const Results = () => {
         </div>
       </section>
 
-      <Link to='/upload' className='btn w-[25%] max-lg:w-[50%] min-w-[240px] text-center '>
-        <div className='text-gray-900 dark:text-white/87'>Upload Another Image</div>
-      </Link>
+      <div className='flex gap-4 max-[560px]:flex-col'>
+        <Link to='/upload' className='btn w-[25%] max-lg:w-[50%] min-w-[240px] text-center '>
+          <div className='text-gray-900 dark:text-white/87'>Upload Another Image</div>
+        </Link>
+        
+        <Link to='#' className='btn w-[25%] max-lg:w-[50%] min-w-[240px] text-center '>
+          <div className='text-gray-900 dark:text-white/87'>Most liked Captions</div>
+        </Link>
+      </div>
     </section>
   )
 }

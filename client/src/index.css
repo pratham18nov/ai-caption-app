@@ -173,3 +173,10 @@ h1 {
 .triangle{
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
+
+
+/* @keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+} */

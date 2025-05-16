@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs")
 
 async function signUpController(req, res){
     try {
-        const {firstName, lastName, email, password} = req.body
+        const {profilePic, firstName, lastName, email, password} = req.body
 
         const user = await userModel.findOne({email})
         if(user) throw new Error("User already exists with same email")

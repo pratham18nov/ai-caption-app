@@ -5,6 +5,10 @@ import heroImg from '../assets/text art.jpg'
 import { GiSparkles } from 'react-icons/gi'
 import { LuLetterText } from 'react-icons/lu'
 import { Link } from 'react-router-dom';
+import TypewriterText from '../animations/TypewriterText'
+// import ColorExtractor from '../components/ColorExtractor'
+
+import img2 from '../assets/welcome.jpg'
 
 const Home = () => {
   const howArray = [
@@ -75,13 +79,20 @@ const Home = () => {
 
         {/* Ready to get started */}
         <section className='h-[65vh] w-full flex flex-col justify-center items-center'>
-          <p className='text-5xl font-bold text-center text-gradient'>Ready to Get Started?</p>
+          
+          <div className='text-5xl font-bold text-center text-gradient'> <TypewriterText text="Ready to Get Started?"/> </div>
           <p className='text-xl text-center text-slate-700 dark:text-slate-300 mt-2'>Upload your first image and experience the power of AI-generated caption recommendations.</p>
           <Link to='/upload' className='btn mt-10 flex justify-center items-center gap-2 text-gray-900 dark:text-white/87'>
             <i className='text-lg text-gray-900 dark:text-white/87'><FiUpload/></i> 
             <span className='text-gray-900 dark:text-white/87'>Upload Your Image</span> 
           </Link>
         </section>
+
+        {/* <div className='typewriting'>
+          <div>
+            <p>CSS trpewriting effect</p>
+          </div>
+        </div> */}
     </section>
   )
 }
