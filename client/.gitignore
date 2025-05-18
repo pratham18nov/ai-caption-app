@@ -16,6 +16,8 @@ dist-ssr
 # extra
 instructions.txt
 ToDo.jsx
+../src/pages/Test.jsx
+../client/src/pages/Test.jsx
 
 # Editor directories and files
 .vscode/*

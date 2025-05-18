@@ -7,7 +7,8 @@ const saveCaptionSchema = new mongoose.Schema({
     },
     likeCount:{
         type: Number,
-        required: true 
+        required: true,
+        default: 1,
     },
     tags:[{     //array with index
         type: String,

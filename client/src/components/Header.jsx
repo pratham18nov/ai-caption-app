@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FiUpload } from 'react-icons/fi';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import logo from '../assets/typography-bird.png'
 import SummaryApi from '../helpers/SummaryApi';
@@ -49,6 +49,10 @@ const Header = ({dp}) => {
     }
   }, [])
 
+  const handleProfileButton = () =>{
+    navigate('/my-profile', {state: {}})
+  }
+
   return (
     <section className='fixed w-full h-16 z-10'>
       <div className='w-full h-16 backdrop-blur-lg flex items-center absolute'></div>
@@ -72,12 +76,16 @@ const Header = ({dp}) => {
           <div>
             { 
               user ? (
-                <span className=' inline-block text-gray-900 dark:text-white/87 relative '>
+                <div className=' inline-block text-gray-900 dark:text-white/87 relative '>
                   <img src={dp || userImg} alt='profile' className='w-10 h-10 object-cover rounded-full cursor-pointer' onClick={()=>setShowLogout((prev)=>!prev)}/>
-                  {
-                    showLogout && <div ref={logoutRef} className='btn absolute -ml-6 mt-2 before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:w-5 before:h-5 before:bg-[#94A3B8] dark:before:bg-[#322f2f] before:rotate-45 before:clip-path-[polygon(50%_0%,0%_100%,100%_100%)]' onClick={handleLogout}>Logout</div>
+                  { showLogout && 
+                    <div ref={logoutRef} className='btn absolute -ml-10 mt-2 before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:w-5 before:h-5 before:bg-[#94A3B8] dark:before:bg-[#322f2f] before:rotate-45 before:clip-path-[polygon(50%_0%,0%_100%,100%_100%)] flex flex-col items-center gap-2'>
+                      <div onClick={handleLogout} className='w-full px-4 text-center hover:bg-[#E2E8F0] dark:hover:bg-[#1a1a1a] transition-colors cursor-pointer'>Logout</div>
+                      <div className="h-[1px] w-full bg-gray-300 dark:bg-gray-600 mx-2"></div>
+                      <div onClick={handleProfileButton} className='w-full text-center hover:bg-[#E2E8F0] dark:hover:bg-[#1a1a1a] transition-colors cursor-pointer'>My profile</div>
+                    </div>
                   }
-                </span>
+                </div>
               ) : (
                 <Link to='/login'>
                   <span className='btn inline-block text-gray-900 dark:text-white/87'>Login</span>

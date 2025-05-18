@@ -92,7 +92,7 @@ const Upload = () => {
         </div>
 
         {/* color spill */}
-        {imageArray[0] && <div className="absolute -inset-5 blur-3xl opacity-25 -z-10 transition-all duration-1500 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
+        {imageArray[0] && <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
 
 
         <button className='w-84 max-sm:w-70 text-center'>

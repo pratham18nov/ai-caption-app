@@ -1,6 +1,6 @@
-// const backendDomain = "http://localhost:8080"
+const backendDomain = "http://localhost:8080"
 // const backendDomain = "https://pic-lingo-server.vercel.app"
-const backendDomain = "https://piclingo.onrender.com"
+// const backendDomain = "https://piclingo.onrender.com"
 
 const SummaryApi = {
     signUp:{
@@ -22,6 +22,10 @@ const SummaryApi = {
     saveCaptions:{
         url: `${backendDomain}/api/save-caption`,
         method: "POST"
+    },
+    getAllCaptions:{
+        url: `${backendDomain}/api/get-liked-captions`,
+        method: "GET" 
     }
 }
 

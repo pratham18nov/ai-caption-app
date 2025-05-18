@@ -7,6 +7,7 @@ const authToken = require('../middlewares/authToken')
 const userDetailsController = require('../controller/user/userDetails')
 const userLogoutController = require('../controller/user/userLogout')
 const saveCaptionController = require('../controller/caption/saveCaption')
+const mostLikedCaptions = require('../controller/caption/mostLikedCaptions')
 
 
 router.post('/signup', signUpController)
@@ -17,7 +18,9 @@ router.get("/user-logout", userLogoutController)
 
 
 // caption routes
-router.post('/save-caption', saveCaptionController)
+router.post('/save-caption', authToken, saveCaptionController)
+router.get('/get-liked-captions', authToken, mostLikedCaptions)
+
 
 
 

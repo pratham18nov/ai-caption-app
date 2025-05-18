@@ -13,6 +13,8 @@ import Login from './pages/Login';
 import { useEffect, useState } from 'react';
 import SummaryApi from './helpers/SummaryApi';
 import Test from './pages/Test';
+import MostLikedCaptions from './pages/MostLikedCaptions';
+import MyProfile from './pages/MyProfile';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { fetchUserDetails } from './store/userSlice';
 
@@ -78,6 +80,8 @@ function App() {
             <Route path="/upload" element={<Upload />} />
             <Route path="/about" element={<About />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/most-liked-captions" element={<MostLikedCaptions />} />
+            <Route path="/my-profile" element={<MyProfile user={userDetails}/>} />
 
             <Route path="/testing" element={<Test/>} />
           </Routes>

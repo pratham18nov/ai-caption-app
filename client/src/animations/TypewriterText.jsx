@@ -10,10 +10,7 @@ const TypewriterText = ({ text }) => {
       from { width: 0ch; }
       to { width: ${characterCount}ch; }
     }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
+      
   `;
 
   const { ref, inView } = useInView({ triggerOnce: true });

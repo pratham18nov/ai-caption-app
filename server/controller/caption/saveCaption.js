@@ -4,8 +4,10 @@ async function saveCaptionController(req, res){
     try {
         const {caption} = req.body
         if(!caption) throw new Error("Caption not received")
+        
+        // const normalizedCaption = caption.trim().toLowerCase()
 
-        const exists = await saveCaptionsModel.findOne({caption})
+        const exists = await saveCaptionsModel.findOne( {caption} )
         if(exists){
             const updated = await saveCaptionsModel.findByIdAndUpdate(
                 exists._id, 

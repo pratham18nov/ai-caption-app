@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import TypewriterText from '../animations/TypewriterText'
 // import ColorExtractor from '../components/ColorExtractor'
 
-import img2 from '../assets/welcome.jpg'
+// import img2 from '../assets/welcome.jpg'
 
 const Home = () => {
   const howArray = [
