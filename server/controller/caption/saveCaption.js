@@ -2,7 +2,7 @@ const saveCaptionsModel = require("../../models/saveCaptionsModel");
 
 async function saveCaptionController(req, res){
     try {
-        const {caption} = req.body
+        const {caption, userId} = req.body
         if(!caption) throw new Error("Caption not received")
         
         // const normalizedCaption = caption.trim().toLowerCase()
@@ -12,6 +12,7 @@ async function saveCaptionController(req, res){
             const updated = await saveCaptionsModel.findByIdAndUpdate(
                 exists._id, 
                 { $inc: { likeCount: 1} },
+                {likedUsers: userId},
                 { new : true }
             )
 
@@ -27,7 +28,8 @@ async function saveCaptionController(req, res){
             
             const payload = {
                 ...req.body,
-                likeCount: Number(likeCount)+1
+                likeCount: Number(likeCount)+1,
+                likedUsers: userId
             }
 
             const store = new saveCaptionsModel(payload)

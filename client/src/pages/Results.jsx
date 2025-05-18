@@ -23,6 +23,7 @@ const Results = () => {
   const [translatedTexts, setTranslatedTexts] = useState([])
   const [translatedIndex, setTranslatedIndex] = useState([])
   const authToken = localStorage.getItem("authToken")
+  const userId = localStorage.getItem("userId")
 
   const copyText = async(text, index) =>{
     try{
@@ -73,7 +74,7 @@ const Results = () => {
     }
 
     try{
-      const data = {caption:capArray[index].title, likeCount:0, tags:keywordsArray}
+      const data = {caption:capArray[index].title, likeCount:0, tags:keywordsArray, likedUsers:userId}
 
       const dataResponse = await fetch(SummaryApi.saveCaptions.url, {
         method : SummaryApi.saveCaptions.method,

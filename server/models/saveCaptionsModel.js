@@ -13,6 +13,10 @@ const saveCaptionSchema = new mongoose.Schema({
     tags:[{     //array with index
         type: String,
         index: true
+    }],
+    likedUsers:[{
+        type: String,
+        index: true
     }]
 }, {timestamps: true})
 
