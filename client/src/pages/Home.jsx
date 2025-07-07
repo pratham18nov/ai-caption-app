@@ -64,12 +64,13 @@ const Home = () => {
             {
               howArray.map((data, index)=>{
                 return (
-                  <div key={index} className='flex flex-col justify-center items-center gap-4'>
-                    <div className='h-18 w-18 sm:h-20 sm:w-20 rounded-full flex justify-center items-center text-4xl bg-[#94A3B8] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
+                  <div key={index} className='card-effect-border group w-[33%] rounded-2xl p-4 flex flex-col justify-center items-center gap-4'>
+                    <div className='card-effect-overlay'></div>
+                    <div className='card-effect-icon h-18 w-18 sm:h-20 sm:w-20 rounded-full flex justify-center items-center text-4xl bg-[#94A3B8] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
                       {data.icon}
                     </div>
-                    <p className='text-2xl sm:text-3xl font-bold'>{data.title}</p>
-                    <p className='text-lg sm:text-xl text-slate-700 dark:text-slate-300 text-center max-w-[80%]'>{data.description}</p>
+                    <p className='card-effect-title text-2xl sm:text-3xl font-bold '>{data.title}</p>
+                    <p className='card-effect-desc text-lg sm:text-xl text-slate-700 dark:text-slate-300 text-center max-w-[80%] group-hover:text-black dark:group-hover:text-white'>{data.description}</p>
                   </div>
                 )
               })
@@ -80,7 +81,7 @@ const Home = () => {
         {/* Ready to get started */}
         <section className='h-[65vh] w-full flex flex-col justify-center items-center'>
           
-          <div className='text-5xl font-bold text-center text-gradient'> <TypewriterText text="Ready to Get Started?"/> </div>
+          <div className='text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gradient'> <TypewriterText text="Ready to Get Started?"/> </div>
           <p className='text-xl text-center text-slate-700 dark:text-slate-300 mt-2'>Upload your first image and experience the power of AI-generated caption recommendations.</p>
           <Link to='/upload' className='btn mt-10 flex justify-center items-center gap-2 text-gray-900 dark:text-white/87'>
             <i className='text-lg text-gray-900 dark:text-white/87'><FiUpload/></i> 

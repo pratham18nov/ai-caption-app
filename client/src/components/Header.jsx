@@ -54,7 +54,7 @@ const Header = ({dp}) => {
   }
 
   return (
-    <section className='fixed w-full h-16 z-10'>
+    <section className='fixed w-full h-16 z-50'>
       <div className='w-full h-16 backdrop-blur-lg flex items-center absolute'></div>
 
       <div className='w-full flex justify-between relative px-12 max-md:px-4 py-2'>
@@ -80,9 +80,9 @@ const Header = ({dp}) => {
                   <img src={dp || userImg} alt='profile' className='w-10 h-10 object-cover rounded-full cursor-pointer' onClick={()=>setShowLogout((prev)=>!prev)}/>
                   { showLogout && 
                     <div ref={logoutRef} className='btn absolute -ml-10 mt-2 before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:w-5 before:h-5 before:bg-[#94A3B8] dark:before:bg-[#322f2f] before:rotate-45 before:clip-path-[polygon(50%_0%,0%_100%,100%_100%)] flex flex-col items-center gap-2'>
-                      <div onClick={handleLogout} className='w-full px-4 text-center hover:bg-[#E2E8F0] dark:hover:bg-[#1a1a1a] transition-colors cursor-pointer'>Logout</div>
-                      <div className="h-[1px] w-full bg-gray-300 dark:bg-gray-600 mx-2"></div>
                       <div onClick={handleProfileButton} className='w-full text-center hover:bg-[#E2E8F0] dark:hover:bg-[#1a1a1a] transition-colors cursor-pointer'>My profile</div>
+                      <div className="h-[1px] w-full bg-gray-300 dark:bg-gray-600 mx-2"></div>
+                      <div onClick={handleLogout} className='w-full px-4 text-center hover:bg-[#E2E8F0] dark:hover:bg-[#1a1a1a] transition-colors cursor-pointer'>Logout</div>
                     </div>
                   }
                 </div>

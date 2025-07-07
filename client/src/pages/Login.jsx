@@ -51,10 +51,13 @@ const Login = () => {
             // console.log("authToken", dataApi.data)
 // need to used here redux or recoil to store the data
             localStorage.setItem("userId", dataApi.user.userId)
-            toast.success(dataApi.message)
+            
+            setTimeout(()=>{    //used a slight delay to ensure storage settles
+                toast.success(dataApi.message)
+                navigate('/')
+            }, 100)
             setUserId(dataApi.user.userId)
             // navigate('/', {userId: dataApi.user.userId})
-            navigate('/')
         }
         if(dataApi.error){
             toast.error(dataApi.message)

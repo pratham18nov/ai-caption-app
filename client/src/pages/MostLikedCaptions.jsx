@@ -19,7 +19,9 @@ const MostLikedCaptions = () => {
     const [capSaved, setCapSaved] = useState([])
     const [translatedTexts, setTranslatedTexts] = useState([])
     const [translatedIndex, setTranslatedIndex] = useState([])
+    
     const authToken = localStorage.getItem("authToken")
+    const userId = localStorage.getItem("userId")
 
     const fetchCaptions = async() =>{
         const response = await fetch(SummaryApi.getAllCaptions.url, {
@@ -94,7 +96,7 @@ const MostLikedCaptions = () => {
         }
 
         try{
-            const data = {caption:capArray[index].caption}
+            const data = {caption:capArray[index].caption, userId:userId}
 
             const dataResponse = await fetch(SummaryApi.saveCaptions.url, {
                 method : SummaryApi.saveCaptions.method,
@@ -173,8 +175,8 @@ const MostLikedCaptions = () => {
                         style={{zIndex: data.length-index}}
                         className='border border-slate-600 rounded-lg p-4 flex flex-col gap-4 bg-[#E2E8F0] dark:bg-[#1a1a1a]'>
                         <p className='text-lg text-slate-700 dark:text-slate-300' value={data.caption}>{translatedIndex.includes(index) ? translatedTexts[index]: data.caption}</p>
-                        <div className='flex items-center text-sm'>
-                            <div className='opacity-75'>KeyWords/Category:</div>
+                        <div className='flex max-md:flex-col items-center text-sm'>
+                            <div className='opacity-75 max-md:w-full max-md:ml-4'><span>KeyWords/Category:</span></div>
                             <div className='p-1 flex gap-2 w-contain w-full flex-wrap'>
                             {
                                 data.tags.map((data, index)=>{
@@ -183,7 +185,6 @@ const MostLikedCaptions = () => {
                                 )
                                 })
                             }
-                            
                             </div>
                         </div>
                         <div className='flex justify-between max-sm:flex-row-reverse'>

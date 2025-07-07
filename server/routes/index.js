@@ -8,13 +8,16 @@ const userDetailsController = require('../controller/user/userDetails')
 const userLogoutController = require('../controller/user/userLogout')
 const saveCaptionController = require('../controller/caption/saveCaption')
 const mostLikedCaptions = require('../controller/caption/mostLikedCaptions')
+const updateUserController = require('../controller/user/updateUser')
 
 
+//user routes
 router.post('/signup', signUpController)
 router.post('/login', loginController)
 router.get('/user-details', userDetailsController)
 // router.get('/user-details', authToken, userDetailsController)
 router.get("/user-logout", userLogoutController)
+router.put("/update-proflie", authToken, updateUserController)
 
 
 // caption routes

@@ -15,8 +15,8 @@ const saveCaptionSchema = new mongoose.Schema({
         index: true
     }],
     likedUsers:[{
-        type: String,
-        index: true
+        type: mongoose.Schema.Types.ObjectId, // Use ObjectId here if user IDs are ObjectIds
+        ref: 'User'
     }]
 }, {timestamps: true})
 

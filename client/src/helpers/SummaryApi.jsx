@@ -1,4 +1,5 @@
 // const backendDomain = "http://localhost:8080"
+    // backend currently deployed on render
 // const backendDomain = "https://pic-lingo-server.vercel.app"
 const backendDomain = "https://piclingo.onrender.com"
 
@@ -26,6 +27,10 @@ const SummaryApi = {
     getAllCaptions:{
         url: `${backendDomain}/api/get-liked-captions`,
         method: "GET" 
+    },
+    updateProfile:{
+        url: `${backendDomain}/api/update-proflie`,
+        method: "PUT" 
     }
 }
 

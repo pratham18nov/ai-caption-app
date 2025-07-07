@@ -22,6 +22,7 @@ const Results = () => {
   const [capSaved, setCapSaved] = useState([])
   const [translatedTexts, setTranslatedTexts] = useState([])
   const [translatedIndex, setTranslatedIndex] = useState([])
+  
   const authToken = localStorage.getItem("authToken")
   const userId = localStorage.getItem("userId")
 
@@ -74,14 +75,14 @@ const Results = () => {
     }
 
     try{
-      const data = {caption:capArray[index].title, likeCount:0, tags:keywordsArray, likedUsers:userId}
+      const data = {caption:capArray[index].title, tags:keywordsArray, userId:userId}
 
       const dataResponse = await fetch(SummaryApi.saveCaptions.url, {
         method : SummaryApi.saveCaptions.method,
         credentials: "include",
         headers: {
           'Authorization': `Bearer ${authToken}`,
-          "content-type" : "application/json"
+          "Content-Type" : "application/json"
         },
         body: JSON.stringify(data),
       })

@@ -7,8 +7,11 @@ import GenerateCaptions from '../components/GenerateCaptions'
 import imageTobase64 from '../helpers/imageTobase64'
 import TypewriterText from '../animations/TypewriterText'
 import ColorExtractor from '../components/ColorExtractor'
+// import '../animations/'
+import InteractiveCard from '../animations/InteractiveCard'
 
 const Upload = () => {
+  const [loading, setLoading] = useState(false)
   const [imageArray, setImageArray] = useState([])
   const [dominantColor, setDominantColor] = useState(null)
   const [invertedColor, setInvertedColor] = useState(null)
@@ -55,6 +58,8 @@ const Upload = () => {
   
 
   const genCaps = async() =>{
+    setLoading(true)
+
     const captions = await GenerateCaptions(imageArray)
     navigate('/results', {state: {image: imageArray, dominantColor:dominantColor, invertedColor:invertedColor}})
     console.log("captions generated", captions)
@@ -64,8 +69,11 @@ const Upload = () => {
     <section className='h-full w-full flex flex-col jutify-center gap-2 items-center py-15'>
       <div className='text-5xl max-sm:text-3xl font-bold text-center'><TypewriterText text="Upload Your Image"/></div>
       <p className='text-xl max-sm:text-sm text-slate-700 dark:text-slate-300 mt-2 text-center'>Upload an image to get AI-powered caption recommendations.</p>
-      <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 flex flex-col justify-around items-center gap-4 relative'>
-        <div className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 rounded-lg flex justify-center items-center'>
+
+      
+      <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 flex flex-col justify-around items-center gap-4 relative  '>
+      <InteractiveCard className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 rounded-lg flex justify-center items-center'>
+        <div >
           {
             imageArray.length===0 ? (
                 <div className='flex flex-col justify-center items-center gap-4  '>
@@ -91,20 +99,60 @@ const Upload = () => {
           }
         </div>
 
+      </InteractiveCard>
+
         {/* color spill */}
         {imageArray[0] && <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
 
 
-        <button className='w-84 max-sm:w-70 text-center'>
+        <button className='w-84 max-sm:w-70 text-center' style={imageArray.length !== 0 ? { borderRadius: '12px', boxShadow: `0px 0px 10px 0px ${invertedColor}, inset 0px 0px 20px 0px ${invertedColor}` } : {}} >
           {
             imageArray.length !== 0 ? (
-              <div onClick={genCaps} style={{border:`2px solid ${invertedColor}`}}><span className='btn block text-gray-900 dark:text-white/87' >Generate Captions</span></div>
+              <div onClick={genCaps}>
+                <span className='btn block text-gray-900 dark:text-white/87' >Generate Captions</span>
+              </div>
             ) : (
               <span className='btn-disabled block'>Generate Captions</span>
             )
           }
+
+          {/* {
+            imageArray.length !== 0 ? (
+              <div
+                onClick={(e) => !loading && genCaps(e)} // prevent multiple clicks while loading
+                className="cursor-pointer text-center"
+              >
+                {
+                  loading ? (
+                    <span className="loader block mx-auto h-fit w-fit"></span> // loader animation
+                  ) : (
+                    <span className="btn block text-gray-900 dark:text-white/87">
+                      Generate Captions
+                    </span>
+                  )
+                }
+              </div>
+            ) : (
+              <span className="btn-disabled block text-center">
+                Generate Captions
+              </span>
+            )
+          } */}
+
         </button>
       </div>
+      
+
+      {/* <InteractiveCard/> */}
+
+      {
+        loading ? (
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs ">
+            <div className="loader"></div> 
+          </div>
+        ) : null
+      }
+      
     </section>
   )
 }
