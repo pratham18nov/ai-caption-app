@@ -24,7 +24,8 @@ const Results = () => {
   const [translatedIndex, setTranslatedIndex] = useState([])
   
   const authToken = localStorage.getItem("authToken")
-  const userId = localStorage.getItem("userId")
+  const user = JSON.parse(localStorage.getItem("userData"))
+  const userId = user._id
 
   const copyText = async(text, index) =>{
     try{

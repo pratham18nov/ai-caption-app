@@ -6,6 +6,7 @@ import { GiSparkles } from 'react-icons/gi'
 import { LuLetterText } from 'react-icons/lu'
 import { Link } from 'react-router-dom';
 import TypewriterText from '../animations/TypewriterText'
+import InteractiveCard from '../animations/InteractiveCard'
 // import ColorExtractor from '../components/ColorExtractor'
 
 // import img2 from '../assets/welcome.jpg'
@@ -51,9 +52,9 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className='p-12 max-sm:min-w-[360px] max-lg:min-w-[50%] max-md:hidden'>
+          <InteractiveCard className='max-sm:min-w-[360px] max-lg:min-w-[50%] max-md:hidden'>
             <img src={heroImg} alt='' className='max-lg:max-h-[1240px] max-lg:w-[1240px] rounded-lg'/>
-          </div>
+          </InteractiveCard>
         </section>
 
         {/* How it works */}

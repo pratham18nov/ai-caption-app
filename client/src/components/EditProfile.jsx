@@ -11,12 +11,14 @@ import { FaXTwitter } from 'react-icons/fa6'
 import { GrInstagram } from 'react-icons/gr'
 import { MdFacebook } from 'react-icons/md'
 
-const EditProfile = ( {open, onClose, user} ) => {
+// const EditProfile = ( {open, onClose, user} ) => {
+const EditProfile = ( {open, onClose} ) => {
   const [loading, setLoading] = useState(false)
 
   // console.log("user-data", user)
   const navigate = useNavigate()
-
+  
+  const user = JSON.parse(localStorage.getItem("userData"))
   const [editData, setEditData] = useState({
     userId: user?._id,
     firstName: user?.firstName || "",

@@ -3,6 +3,9 @@ import { MdDarkMode, MdLightMode } from 'react-icons/md'
 
 const ThemeToggle = () => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark")
+    const [isDark, setIsDark] = useState(theme==="dark")
+    console.log("isDark", isDark)
+    
 
     useEffect(()=>{
         if(theme==="dark"){
@@ -16,6 +19,8 @@ const ThemeToggle = () => {
 
     const themeHandler = () =>{
         setTheme(theme==="dark" ? "light" : "dark")
+        setIsDark(()=>!isDark)
+        localStorage.setItem("isDark", isDark)
     }
 
     return (

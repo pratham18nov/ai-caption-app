@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Carousel from '../components/Carousel'
 import img1 from '../assets/crsl-l1.jpg'
 import img2 from '../assets/crsl-l2.jpg'
@@ -11,12 +11,17 @@ import { toast } from 'react-toastify'
 import { UserContext } from '../context/UserContext'
 
 const Login = () => {
+    const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [data, setData] = useState({
         email: "",
         password: ""
     })
-    const {setUserId} = useContext(UserContext)
+    // const {setUserId} = useContext(UserContext)
+
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/'
+
     const navigate = useNavigate()
     const images = [img1, img3, img2, imgWelcome]
 
@@ -31,13 +36,14 @@ const Login = () => {
     }
     const handleSubmit = async(e) =>{
         e.preventDefault()
+        setLoading(true)
 
         console.log("The input data is: ", data)
         // console.log("The input data is: ", data)
 
         const dataResponse = await fetch(SummaryApi.login.url, {
             method: SummaryApi.login.method,
-            credentials: "include",
+            // credentials: "include",
             headers: {
                 "content-type" : "application/json",
             },
@@ -47,22 +53,15 @@ const Login = () => {
         console.log("dataApilogin", dataApi)
         if(dataApi.success){
             console.log("fetched data", dataApi)
-            localStorage.setItem("authToken", dataApi.data) //here data===token as passed from backend
-            // console.log("authToken", dataApi.data)
-// need to used here redux or recoil to store the data
-            localStorage.setItem("userId", dataApi.user.userId)
-            
-            setTimeout(()=>{    //used a slight delay to ensure storage settles
-                toast.success(dataApi.message)
-                navigate('/')
-            }, 100)
-            setUserId(dataApi.user.userId)
-            // navigate('/', {userId: dataApi.user.userId})
+            localStorage.setItem("authToken", dataApi.token) 
+            localStorage.setItem("userData", JSON.stringify(dataApi.userData));
+            toast.success(dataApi.message)
+            navigate(from, {replace: true})
         }
         if(dataApi.error){
             toast.error(dataApi.message)
         }
-
+        setLoading(false)
     }
 
 
@@ -94,10 +93,10 @@ const Login = () => {
                             </i>
                         </label>
                         {/* <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' /> */}
-                        <button className='btn'>Log In</button>
+                        <button className='btn'>{loading ? "Logging in ..." : "Log In"}</button>
                     </form>
 
-                    <span>Don't have an account? <Link to='/signup'><span className='hover:underline'>Sign Up</span></Link></span>
+                    <span>Don't have an account? <Link to='/signup' className='active-link'><span className='hover:underline'>Sign Up</span></Link></span>
                 </div>
 
             </section>
@@ -106,7 +105,7 @@ const Login = () => {
                 <Carousel images={images} />
             </div>
         </section>
-      )
+    )
 }
 
 export default Login

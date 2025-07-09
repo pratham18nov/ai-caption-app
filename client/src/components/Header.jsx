@@ -9,8 +9,11 @@ import { UserContext } from '../context/UserContext';
 import userImg from '../assets/user.png'
 
 
-const Header = ({dp}) => {
-  const user = localStorage.getItem("authToken")
+// const Header = ({dp}) => {
+const Header = () => {
+  // const token = localStorage.getItem("authToken")
+  const user = JSON.parse(localStorage.getItem("userData"))
+  console.log("user data", user)
   // const {userId} = useContext(UserContext)
   const navigate = useNavigate()
   const [showLogout, setShowLogout] = useState(false);
@@ -77,7 +80,7 @@ const Header = ({dp}) => {
             { 
               user ? (
                 <div className=' inline-block text-gray-900 dark:text-white/87 relative '>
-                  <img src={dp || userImg} alt='profile' className='w-10 h-10 object-cover rounded-full cursor-pointer' onClick={()=>setShowLogout((prev)=>!prev)}/>
+                  <img src={user?.profilePic || userImg} alt='profile' className='w-10 h-10 object-cover rounded-full cursor-pointer' onClick={()=>setShowLogout((prev)=>!prev)}/>
                   { showLogout && 
                     <div ref={logoutRef} className='btn absolute -ml-10 mt-2 before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:w-5 before:h-5 before:bg-[#94A3B8] dark:before:bg-[#322f2f] before:rotate-45 before:clip-path-[polygon(50%_0%,0%_100%,100%_100%)] flex flex-col items-center gap-2'>
                       <div onClick={handleProfileButton} className='w-full text-center hover:bg-[#E2E8F0] dark:hover:bg-[#1a1a1a] transition-colors cursor-pointer'>My profile</div>
@@ -93,13 +96,7 @@ const Header = ({dp}) => {
               ) 
             }
           </div>
-          {/* <Link to='/login' className='btn'>
-            <span className='inline-block  text-gray-900 dark:text-white/87'>
-              {
-                user ? ("Logout") : ("Login")
-              }
-            </span>
-          </Link> */}
+          
         </div>
       </div>
       <div className='h-[1px] bg-slate-600 mt-1'></div>

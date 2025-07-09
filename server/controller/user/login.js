@@ -12,40 +12,29 @@ async function loginController(req, res){
         if(!user) throw new Error("User does not exist")
 
         const checkPassword = await bcrypt.compare(password, user.password)
+        if(!checkPassword) throw new Error("Incorrect password, please try again")
 
-        if(checkPassword){
-            const tokenData = {
-                userId: user._id,
-                // firstName: user.firstName,
-                // lastName: user.lastName,
-                // email: user.email,
-                // profilePic: user.profilePic  //makes the token too large 
-            }
-            const token = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, {expiresIn: 60*60*24*7})
+        const tokenData = { userId: user._id }
+        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, {expiresIn: 60*60*24*7})
 
-            const tokenOption = {
-                httpOnly: true,
-                secure: true,
-                sameSite: "Strict"
-            }
-
-            res.cookie("token", token, tokenOption).json({
-                message: "Login successful",
-                data: token,
-                user:{
-                    userId:user._id,
-                    
-                },
-                success: true,
-                error: false
-            })
+        const tokenOption = {
+            httpOnly: true,
+            secure: true,
+            sameSite: "Strict"
         }
-        else{
-            throw new Error("Incorrect password, please try again")
-        }
+
+        const { password: _, ...userWithoutPassword } = user._doc;
+
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            userData: userWithoutPassword,
+            success: true,
+            error: false
+        })
     } 
     catch (err) {
-        res.json({
+        res.status(401).json({
             error: true, 
             success: false,
             message: err.message || err

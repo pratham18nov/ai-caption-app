@@ -7,10 +7,13 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router-dom';
 import EditProfile from '../components/EditProfile';
 
-const MyProfile = ({user}) => {
+// const MyProfile = ({user}) => {
+const MyProfile = () => {
 
   const navigate = useNavigate()
   const [showUpdateBox, setShowUpdateBox] = useState(false)
+
+  const user = JSON.parse(localStorage.getItem("userData"))
 
   const capArray = [
     {
@@ -49,7 +52,7 @@ const MyProfile = ({user}) => {
   }
 
   return (
-    <section className='px-8 flex flex-col gap-4'>
+    <section className='px-8 flex flex-col gap-4 max-md:mt-24'>
         {/* profile */}
         <section className='h-56 w-full flex max-md:flex-col justify-center items-center gap-24 max-md:gap-4 max-[450px]:mb-6'>
             <img src={user?.profilePic || userImg} alt='profile-img' className='w-48 h-48 rounded-full object-cover' />
@@ -61,7 +64,7 @@ const MyProfile = ({user}) => {
         </section>
 
         {/* liked captions */}
-        <section>
+        <section className='max-md:mt-12'>
           <div className='flex justify-between px-2'>
             <p className='pt-4 text-2xl font-bold'>Liked Captions</p>
             <button className='btn '>View all</button>

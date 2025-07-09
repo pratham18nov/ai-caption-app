@@ -20,58 +20,59 @@ import EditProfile from './components/EditProfile';
 // import { fetchUserDetails } from './store/userSlice';
 
 function App() {
-  const [userDetails, setUserDetails] = useState(null);
-  const userId = localStorage.getItem("userId");
+  // const [userDetails, setUserDetails] = useState(null);
+  // const userId = localStorage.getItem("userId");
 
-  const fetchUserDetails = async () => {
-    try {
-      const token = localStorage.getItem("authToken");
+  // const fetchUserDetails = async () => {
+  //   try {
+  //     const token = localStorage.getItem("authToken");
 
-      if (!token || !userId) {
-        console.warn("No token or userId found in localStorage");
-        return;
-      }
+  //     if (!token || !userId) {
+  //       console.warn("No token or userId found in localStorage");
+  //       return;
+  //     }
 
-      console.log("Fetching user details for userId:", userId);
+  //     console.log("Fetching user details for userId:", userId);
 
-      const dataResponse = await fetch(`${SummaryApi.userDetails.url}?userId=${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Add token for secure API calls
-        },
-      });
+  //     const dataResponse = await fetch(`${SummaryApi.userDetails.url}?userId=${userId}`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`, // Add token for secure API calls
+  //       },
+  //     });
 
-      const dataApi = await dataResponse.json();
+  //     const dataApi = await dataResponse.json();
 
-      if (dataApi.success) {
-        setUserDetails(dataApi.data);
-      } else {
-        toast.error("Failed to fetch user details");
-      }
+  //     if (dataApi.success) {
+  //       setUserDetails(dataApi.data);
+  //     } else {
+  //       toast.error("Failed to fetch user details");
+  //     }
 
-      console.log("API Response:", dataApi);
-    } catch (err) {
-      console.error("Error occurred in fetchUserDetails", err);
-      toast.error("Error fetching user details");
-    }
-  };
+  //     console.log("API Response:", dataApi);
+  //   } catch (err) {
+  //     console.error("Error occurred in fetchUserDetails", err);
+  //     toast.error("Error fetching user details");
+  //   }
+  // };
 
-  console.log("userDetails: ", userDetails);
-  // Fetch user details on mount
-  useEffect(() => {
-    fetchUserDetails();
-  }, []); // Empty array to ensure it runs only once
+  // console.log("userDetails: ", userDetails);
+  // // Fetch user details on mount
+  // useEffect(() => {
+  //   fetchUserDetails();
+  // }, []); // Empty array to ensure it runs only once
 
-  // Log user details whenever it updates
-  useEffect(() => {
-    console.log("Updated userDetails:", userDetails);
-  }, [userDetails]);
+  // // Log user details whenever it updates
+  // useEffect(() => {
+  //   console.log("Updated userDetails:", userDetails);
+  // }, [userDetails]);
 
   return (
     <Router>
-      <ToastContainer position="top-center"/>
-      <Header dp={userDetails?.profilePic}/>
+      <ToastContainer/>
+      {/* <Header dp={userDetails?.profilePic}/> */}
+      <Header/>
       <div className="min-h-screen pt-16 overflow-x-hidden relative flex flex-col">
         <div className="flex-grow">
           <Routes>
@@ -82,8 +83,10 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/results" element={<Results />} />
             <Route path="/most-liked-captions" element={<MostLikedCaptions />} />
-            <Route path="/my-profile" element={<MyProfile user={userDetails}/>} />
-            <Route path="/edit-profile" element={<EditProfile user={userDetails}/>} />
+            {/* <Route path="/my-profile" element={<MyProfile user={userDetails}/>} /> */}
+            <Route path="/my-profile" element={<MyProfile />} />
+            {/* <Route path="/edit-profile" element={<EditProfile user={userDetails}/>} /> */}
+            <Route path="/edit-profile" element={<EditProfile />} />
 
             {/* <Route path="/testing" element={<Test/>} /> */}
           </Routes>

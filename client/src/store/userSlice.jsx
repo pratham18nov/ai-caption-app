@@ -7,7 +7,8 @@ export const fetchUserDetails = createAsyncThunk(
   "user/fetchUserDetails",
   async (_, { rejectWithValue }) => {
     try {
-      const userId = localStorage.getItem("userId");
+      const user = JSON.parse(localStorage.getItem("userData"))
+      const userId = user._id
       const token = localStorage.getItem("authToken");
 
       if (!token || !userId) {

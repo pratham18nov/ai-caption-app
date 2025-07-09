@@ -27,7 +27,7 @@ const Carousel = ({images}) => {
       </button>
 
       <div className="flex justify-center">
-        <img src={images[currentIndex]} alt="Slide" className="w-full h-full object-cover rounded-md transition-all relative" />
+        <img src={images[currentIndex]} alt="Slide" className="w-full h-full object-cover rounded-md transition-all relative lazy-loading" />
         {/* Line Indicators */}
         <div className="flex justify-center mt-3 gap-2 absolute bottom-2  " >
           {images.map((_, index) => (

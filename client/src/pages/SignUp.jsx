@@ -15,6 +15,7 @@ const images = [imgwelcome, img2, img3, img1];
 
 const SignUp = () => {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     // const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -26,6 +27,9 @@ const SignUp = () => {
         password: "",
         confirmPassword: ""
     })
+
+    // const location = useLocation()
+    // const from = location.state?.from?.pathname || '/'
 
     const handleUploadPic = async (e) => {
         const file = e.target.files[0]
@@ -63,6 +67,7 @@ const SignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         console.log("The input data is: ", data)
         // console.log("the url is: ", SummaryApi.signUp.url, SummaryApi.signUp.method)
 
@@ -92,6 +97,7 @@ const SignUp = () => {
         else {
             toast.warning("Please check password and confirm password")
         }
+        setLoading(false)
     }
 
 
@@ -134,10 +140,10 @@ const SignUp = () => {
                         </label>
                             {error && <p className='text-red-400 -mt-4 text-sm ml-2'>{error}</p>}
                         <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' />
-                        <button className='btn'>Create account</button>
+                        <button className='btn'> {loading ? "Creating" : "Create account"} </button>
                     </form>
 
-                    <span>Already have an account? <Link to='/login'><span className='hover:underline'>Log in</span></Link></span>
+                    <span>Already have an account? <Link to='/login' className='active-link'><span className='hover:underline'>Log in</span></Link></span>
                 </div>
 
             </section>

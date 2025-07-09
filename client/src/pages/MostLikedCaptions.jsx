@@ -20,10 +20,12 @@ const MostLikedCaptions = () => {
     const [translatedTexts, setTranslatedTexts] = useState([])
     const [translatedIndex, setTranslatedIndex] = useState([])
     
-    const authToken = localStorage.getItem("authToken")
-    const userId = localStorage.getItem("userId")
+    const authToken = localStorage.getItem("authToken");
+    const user = JSON.parse(localStorage.getItem("userData"));
+    const userId = user._id;
 
     const fetchCaptions = async() =>{
+        setLoading(true)
         const response = await fetch(SummaryApi.getAllCaptions.url, {
             method:SummaryApi.getAllCaptions.method,
             headers: {
@@ -38,13 +40,14 @@ const MostLikedCaptions = () => {
             console.log('responseData',responseData.message)
             console.log('array',capArray)
         }
+        setLoading(false)
     }
 
     useEffect(()=>{
-        setLoading(true)
+        // setLoading(true)
         fetchCaptions()
         // console.log('Updated captions array:', capArray)
-        setLoading(false)
+        // setLoading(false)
     }, [])
 
     useEffect(() => {
@@ -124,7 +127,7 @@ const MostLikedCaptions = () => {
     }
 
     const translateText = async(text) =>{
-        console.log("called")
+        // console.log("called")
         try {
             const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|hi`);
             //for other language translation, change langCode in API
@@ -217,6 +220,14 @@ const MostLikedCaptions = () => {
                 }
             </div>
         </div>
+
+        {
+            loading ? (
+                <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs ">
+                    <div className="loader"></div> 
+                </div>
+            ) : null
+        }
     </section>
   )
 }
