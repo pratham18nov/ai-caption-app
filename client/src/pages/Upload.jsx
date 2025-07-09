@@ -73,7 +73,8 @@ const Upload = () => {
 
       
       <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 flex flex-col justify-around items-center gap-4 relative  '>
-        <div className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 rounded-lg flex justify-center items-center'>
+        
+        <InteractiveCard className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 rounded-lg flex justify-center items-center'>
           <div >
             {
               imageArray.length===0 ? (
@@ -99,7 +100,7 @@ const Upload = () => {
               )
             }
           </div>
-        </div>
+        </InteractiveCard>
 
         {/* color spill */}
         {imageArray[0] && <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
