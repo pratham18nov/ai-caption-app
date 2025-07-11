@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BiLike, BiSolidLike } from 'react-icons/bi'
 import { RiTranslateAi2 } from "react-icons/ri";
-import { GrRevert } from "react-icons/gr";
+import { GrNext, GrPrevious, GrRevert } from "react-icons/gr";
 import { FaCheck } from 'react-icons/fa'
 import { LuCopy } from 'react-icons/lu'
 import SummaryApi from '../helpers/SummaryApi'
@@ -11,6 +11,557 @@ import TypewriterText from '../animations/TypewriterText'
 import {motion} from 'motion/react'
 import AnimateNumber from '../animations/AnimateNumber';
 
+const array = [
+    {
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },{
+    "_id": "68297c21fdb7b5b7ae3ab101",
+    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
+    "likeCount": 12,
+    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
+    "likedUsers": ["user123", "user456"],
+    "createdAt": "2025-05-20T08:32:11.000Z",
+    "updatedAt": "2025-07-08T10:11:05.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c34fdb7b5b7ae3ab102",
+    "caption": "Dense fog rolling over the forested valley at dawn",
+    "likeCount": 7,
+    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
+    "likedUsers": [],
+    "createdAt": "2025-05-21T06:05:22.000Z",
+    "updatedAt": "2025-07-08T10:12:41.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c4bfdb7b5b7ae3ab103",
+    "caption": "Crystal clear reflections on a tranquil alpine lake",
+    "likeCount": 9,
+    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
+    "likedUsers": ["user789"],
+    "createdAt": "2025-05-22T09:14:33.000Z",
+    "updatedAt": "2025-07-08T10:13:59.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "68297c5ffdb7b5b7ae3ab104",
+    "caption": "A lonely boat floating in the stillness of the morning lake",
+    "likeCount": 6,
+    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
+    "likedUsers": [],
+    "createdAt": "2025-05-23T04:21:40.000Z",
+    "updatedAt": "2025-07-08T10:14:50.000Z",
+    "__v": 0
+  },
+]
+
+
 const MostLikedCaptions = () => {
     const [loading, setLoading] = useState(false)
     const [capArray, setCapArray] = useState([])
@@ -19,6 +570,12 @@ const MostLikedCaptions = () => {
     const [capSaved, setCapSaved] = useState([])
     const [translatedTexts, setTranslatedTexts] = useState([])
     const [translatedIndex, setTranslatedIndex] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = capArray.slice(indexOfFirstItem, indexOfLastItem);
     
     const authToken = localStorage.getItem("authToken");
     const user = JSON.parse(localStorage.getItem("userData"));
@@ -36,7 +593,8 @@ const MostLikedCaptions = () => {
         })
         const responseData = await response.json()
         if(responseData.success){
-            setCapArray(responseData.data)
+            // setCapArray(responseData.data)
+            setCapArray(array)
             console.log('responseData',responseData.message)
             console.log('array',capArray)
         }
@@ -170,13 +728,13 @@ const MostLikedCaptions = () => {
             <div className='flex flex-col gap-4'>
                 {
                 capArray.length ? (
-                    capArray.map((data, index)=>{
+                    currentItems.map((data, index)=>{
                     return(
                         <motion.div key={index} initial={{y:-index*(175)}} 
                         animate={{y:index*0}} 
                         transition={{duration:1, delay:index*1/3,}}
                         style={{zIndex: data.length-index}}
-                        className='border border-slate-600 rounded-lg p-4 flex flex-col gap-4 bg-[#E2E8F0] dark:bg-[#1a1a1a]'>
+                        className=' border border-slate-600 rounded-lg p-4 flex flex-col gap-4 bg-[#E2E8F0] dark:bg-[#1a1a1a]'>
                         <p className='text-lg text-slate-700 dark:text-slate-300' value={data.caption}>{translatedIndex.includes(index) ? translatedTexts[index]: data.caption}</p>
                         <div className='flex max-md:flex-col items-center text-sm'>
                             <div className='opacity-75 max-md:w-full max-md:ml-4'><span>KeyWords/Category:</span></div>
@@ -220,6 +778,47 @@ const MostLikedCaptions = () => {
                 }
             </div>
         </div>
+
+        <div className="flex justify-center items-center gap-6 mt-10">
+        {/* Prev Button */}
+        <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 text-xl font-bold rounded-full transition-all duration-300
+            ${
+                currentPage === 1
+                ? 'bg-gray-300 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
+                : 'bg-[linear-gradient(108deg,_#903fcf_0%,_#cf0f3c_100%)] text-white hover:brightness-110 hover:shadow-lg cursor-pointer'
+            }`}
+        >
+            <GrPrevious />
+        </button>
+
+        {/* Page Info */}
+        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            Page <span className="text-blue-500">{currentPage}</span> of{' '}
+            {Math.ceil(capArray.length / itemsPerPage)}
+        </span>
+
+        {/* Next Button */}
+        <button
+            onClick={() =>
+            setCurrentPage((prev) =>
+                Math.min(prev + 1, Math.ceil(capArray.length / itemsPerPage))
+            )
+            }
+            disabled={currentPage === Math.ceil(capArray.length / itemsPerPage)}
+            className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-300
+            ${
+                currentPage === Math.ceil(capArray.length / itemsPerPage)
+                ? 'bg-gray-300 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
+                : 'bg-[linear-gradient(288deg,_#903fcf_0%,_#cf0f3c_100%)] text-white hover:brightness-110 hover:shadow-lg cursor-pointer'
+            }`}
+        >
+            <GrNext/>
+        </button>
+        </div>
+
 
         {
             loading ? (

@@ -3,10 +3,18 @@ import { MdDarkMode, MdLightMode } from 'react-icons/md'
 
 const ThemeToggle = () => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark")
-    const [isDark, setIsDark] = useState(theme==="dark")
-    console.log("isDark", isDark)
     
-
+    // Apply theme on component mount
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme") || "dark"
+        if(savedTheme === "dark"){
+            document.documentElement.classList.add("dark")
+        } else {
+            document.documentElement.classList.remove("dark")
+        }
+        setTheme(savedTheme)
+    }, [])
+    
     useEffect(()=>{
         if(theme==="dark"){
             document.documentElement.classList.add("dark")
@@ -15,12 +23,14 @@ const ThemeToggle = () => {
             document.documentElement.classList.remove("dark")
         }
         localStorage.setItem("theme", theme)
+        
+        // Dispatch custom event for theme change
+        window.dispatchEvent(new Event('themeChange'))
     }, [theme])
 
     const themeHandler = () =>{
-        setTheme(theme==="dark" ? "light" : "dark")
-        setIsDark(()=>!isDark)
-        localStorage.setItem("isDark", isDark)
+        const newTheme = theme==="dark" ? "light" : "dark"
+        setTheme(newTheme)
     }
 
     return (

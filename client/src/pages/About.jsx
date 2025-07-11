@@ -5,9 +5,11 @@ import { GiSparkles } from "react-icons/gi";
 import { LuBrainCircuit, LuZap } from "react-icons/lu";
 import { FaEnvelopeOpenText } from "react-icons/fa";
 import { SlPeople } from "react-icons/sl";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TypewriterText from "../animations/TypewriterText";
 import Team from "../components/Team";
+import InteractiveCard from "../animations/InteractiveCard";
+import { GoArrowRight } from "react-icons/go";
 
 const features = [
   {
@@ -51,6 +53,8 @@ const worksArray = [
 ];
 
 const About = () => {
+  const navigate = useNavigate()
+  
   return (
     <section className="w-screen mt-24 overflow-x-hidden">
       <div className="text-5xl font-bold text-center">
@@ -77,7 +81,9 @@ const About = () => {
           <p className="text-2xl font-bold max-md:text-center mt-6">How It Works</p>
           <div className="flex flex-col gap-6 mt-6 w-full">
             {worksArray.map((item, index) => (
-              <div key={index} className="card-effect-border group bg-slate-300 dark:bg-[#202020] p-5 sm:p-6 rounded-xl"
+              <div key={index} 
+                
+              className="card-effect-border group bg-slate-300 dark:bg-[#202020] p-5 sm:p-6 rounded-xl"
               >
                 <div className="card-effect-overlay" />
 
@@ -100,9 +106,9 @@ const About = () => {
         </div>
 
         {/* Image part */}
-        <div className="max-w-[620px] w-full md:w-[40%] rounded-lg overflow-hidden max-md:ml-0">
+        <InteractiveCard className="max-w-[620px] w-full md:w-[40%] rounded-lg overflow-hidden max-md:ml-0">
           <img src={aboutImg} alt="About" className="w-full h-auto object-cover" />
-        </div>
+        </InteractiveCard>
       </section>
 
 
@@ -156,7 +162,22 @@ const About = () => {
         </Link>
       </section>
 
-      
+      {/* <section className="w-full dark:bg-[#333333] bg-slate-100"> */}
+        <div className="w-[90%] max-w-6xl mx-auto my-12 p-8 dark:bg-[#3f3f3f] bg-slate-100 rounded-2xl  shadow-xl hover:shadow-2xl transition-shadow duration-300 group" >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+              <h2 className="text-3xl font-bold mb-2 group-hover:underline transition-all duration-200">
+                Have any questions or feedback?
+              </h2>
+              <p className="text-lg opacity-90">We’d love to hear from you! Click to get in touch.</p>
+            </div>
+            <button onClick={()=>navigate('/contact-us')} className="btn flex items-center gap-2 px-6 py-3 mt-4 md:mt-0 font-semibold rounded-lg shadow-md transition" >
+              Contact Us <GoArrowRight/>
+            </button>
+          </div>
+        </div>
+      {/* </section> */}
+
     </section>
   );
 };

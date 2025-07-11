@@ -15,7 +15,10 @@ const Upload = () => {
   const [imageArray, setImageArray] = useState([])
   const [dominantColor, setDominantColor] = useState(null)
   const [invertedColor, setInvertedColor] = useState(null)
+  const [mood, setMood] = useState("Happy")
   const navigate = useNavigate();
+
+  console.log(mood)
   
 
   const handleChange = async(e) =>{
@@ -61,6 +64,7 @@ const Upload = () => {
     setLoading(true)
 
     // const captions = await GenerateCaptions(imageArray)
+    // const captions = await GenerateCaptions(imageArray, mood)
     navigate('/results', {state: {image: imageArray, dominantColor:dominantColor, invertedColor:invertedColor}})
     // console.log("captions generated", captions)
     setLoading(false)
@@ -72,12 +76,11 @@ const Upload = () => {
       <p className='text-xl max-sm:text-sm text-slate-700 dark:text-slate-300 mt-2 text-center'>Upload an image to get AI-powered caption recommendations.</p>
 
       
-      <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 flex flex-col justify-around items-center gap-4 relative  '>
+      <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 py-4 flex flex-col justify-around items-center gap-4 relative  '>
         
-        <InteractiveCard className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 rounded-lg flex justify-center items-center'>
-          <div >
-            {
-              imageArray.length===0 ? (
+        <InteractiveCard className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 hover:rounded-lg flex justify-center items-center'>
+          <div>
+            { imageArray.length===0 ? (
                   <div className='flex flex-col justify-center items-center gap-4  '>
                     <div className='h-18 w-18 sm:h-20 sm:w-20 rounded-full flex justify-center items-center text-4xl bg-[#94A3B8] dark:bg-[#322f2f] text-slate-700 dark:text-slate-400'><LuImage/></div>
                     <p className='text-2xl max-sm:text-lg font-bold text-center'>Drag and drop your image here</p>
@@ -91,16 +94,27 @@ const Upload = () => {
                     </label>
                   </div>
               ) : (
-                <div className='relative'>
-                  <div className='absolute -top-2 -right-6 text-2xl cursor-pointer' onClick={removeImage}><IoMdCloseCircleOutline/></div>
-                  <div className='max-w-full max-h-56 flex justify-center items-center '>
-                    <img src={imageArray} alt='imageArray' className='w-full max-h-56 object-cover'/>
+                // <div className='bg-red-400 max-sm:w-[80%]  hover:rounded-lg flex justify-center items-center'>
+                  <div className='relative'>
+                    <div className='absolute -top-2 -right-6 text-2xl cursor-pointer' onClick={removeImage}><IoMdCloseCircleOutline/></div>
+                    <div className='max-w-full max-h-56 flex justify-center items-center '>
+                      <img src={imageArray} alt='imageArray' className='w-full max-h-56 object-cover'/>
+                    </div>
                   </div>
-                </div>
+                // </div>
               )
             }
           </div>
         </InteractiveCard>
+
+        <div className='flex items-center gap-4'>
+          <span className='opacity-75'>Select a mood:</span>
+          <div className='flex gap-2 flex-wrap'>
+            <button onClick={()=>setMood("Happy")} className={`h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center cursor-pointer ${mood==="Happy" ? 'bg-white dark:bg-black' : null}`} style={{border:`2px solid ${invertedColor}`}}>Happy</button>
+            <button onClick={()=>setMood("Sarcastic")} className={`h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center cursor-pointer ${mood==="Sarcastic" ? 'bg-white dark:bg-black' : null}`} style={{border:`2px solid ${invertedColor}`}}>Sarcastic</button>
+            <button onClick={()=>setMood("Playful")} className={`h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center cursor-pointer ${mood==="Playful" ? 'bg-white dark:bg-black' : null}`} style={{border:`2px solid ${invertedColor}`}}>Playful</button>
+          </div> 
+        </div>
 
         {/* color spill */}
         {imageArray[0] && <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
@@ -116,36 +130,12 @@ const Upload = () => {
               <span className='btn-disabled block'>Generate Captions</span>
             )
           }
-
-          {/* {
-            imageArray.length !== 0 ? (
-              <div
-                onClick={(e) => !loading && genCaps(e)} // prevent multiple clicks while loading
-                className="cursor-pointer text-center"
-              >
-                {
-                  loading ? (
-                    <span className="loader block mx-auto h-fit w-fit"></span> // loader animation
-                  ) : (
-                    <span className="btn block text-gray-900 dark:text-white/87">
-                      Generate Captions
-                    </span>
-                  )
-                }
-              </div>
-            ) : (
-              <span className="btn-disabled block text-center">
-                Generate Captions
-              </span>
-            )
-          } */}
-
         </button>
       </div>
       
+      <span className='opacity-50 tracking-wider text-center'>For added privacy, we do not store your images</span>
 
-      {/* <InteractiveCard/> */}
-
+      {/* loading animation */}
       {
         loading ? (
           <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs ">

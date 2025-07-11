@@ -9,6 +9,7 @@ const userLogoutController = require('../controller/user/userLogout')
 const saveCaptionController = require('../controller/caption/saveCaption')
 const mostLikedCaptions = require('../controller/caption/mostLikedCaptions')
 const updateUserController = require('../controller/user/updateUser')
+const contactController = require('../controller/contact/contact')
 
 
 //user routes
@@ -23,6 +24,10 @@ router.put("/update-proflie", authToken, updateUserController)
 // caption routes
 router.post('/save-caption', authToken, saveCaptionController)
 router.get('/get-liked-captions', authToken, mostLikedCaptions)
+
+
+//contact
+router.post('/contact-us', contactController)
 
 
 

@@ -8,8 +8,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import SummaryApi from '../helpers/SummaryApi'
 import {motion} from 'motion/react'
 import TypewriterText from '../animations/TypewriterText';
+import PartyBlaster from '../animations/PartyBlaster';
 import isLoggedIn from '../helpers/isLoggedIn';
 import { toast } from 'react-toastify'
+import GenerateCaptions from '../components/GenerateCaptions';
 
 const Results = () => {
   const navigate = useNavigate()
@@ -17,6 +19,7 @@ const Results = () => {
   const {image, dominantColor,  invertedColor} = location.state || {}
   // console.log('image Received', image)
 
+  const [loading, setLoading] = useState(false)
   const [copiedIndex, setCopiedIndex] = useState(null)
   const [likedIndex, setLikedIndex] = useState([])
   const [capSaved, setCapSaved] = useState([])
@@ -152,6 +155,15 @@ const Results = () => {
     navigate('/most-liked-captions')
   }
 
+  const genCaps = async() =>{
+    setLoading(true)
+
+    // const captions = await GenerateCaptions(image)
+    // const captions = await GenerateCaptions(image, mood)
+    // console.log("captions generated", captions)
+    setLoading(false)
+  }
+
   const keywordsArray = [ "Mountain", "cloud", "Rooftop", "Rain", "Travel", "Happy" ]
   const capArray = [
     {
@@ -179,6 +191,7 @@ const Results = () => {
 
   return (
     <section className='w-full flex flex-col jutify-center gap-2 items-center py-15'>
+      <PartyBlaster />
       <p className='text-5xl max-sm:text-3xl font-bold text-center'>Caption Recommendations</p>
       <p className='text-xl max-sm:text-sm text-slate-700 dark:text-slate-300 mt-2 text-center max-sm:w-[80%]'>Here are AI-generated caption suggestions for your image.</p>
 
@@ -186,16 +199,16 @@ const Results = () => {
         <div className='h-full w-[55vw] max-lg:w-[80vw] max-md:w-[100vw] flex justify-around gap-8 max-lg:flex-col max-lg:items-center'>
 
           {/* image part */}
-          <div className='h-full w-[38%] max-lg:w-[90%] border border-slate-700 rounded-lg relative'>
+          <div className='h-full w-[38%] max-lg:w-[90%] border border-slate-700 rounded-lg relative' >
             <div className='p-2'>
               <img src={image} alt='image' className='mx-auto rounded-lg'/>
             </div>
-            <div className='p-2'>KeyWords:</div>
+            <div className='p-2 opacity-75'>KeyWords:</div>
             <div className='p-2 flex gap-2 w-contain w-full flex-wrap'>
               {
                 keywordsArray.map((data, index)=>{
                   return(
-                    <span key={index} className='h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center' style={{border:`1px solid ${invertedColor}`}}>{data}</span>
+                    <span key={index} className='h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center' style={{border:`2px solid ${invertedColor}`}}>{data}</span>
                   )
                 })
               }
@@ -252,7 +265,19 @@ const Results = () => {
         </div>
       </section>
 
-      <div className='flex gap-4 max-[560px]:flex-col'>
+      <div className='flex gap-4 max-md:flex-col'>
+        <Link to='/upload' className='btn w-fit min-w-56 text-center '>
+          <div className='text-gray-900 dark:text-white/87'>Upload Another Image</div>
+        </Link>
+        <button onClick={genCaps} className='btn w-fit min-w-56 text-center '>
+          <div className='text-gray-900 dark:text-white/87'>Generate More</div>
+        </button>
+        <button onClick={handleNavigate} className='btn w-fit min-w-56 text-center '>
+          <div className='text-gray-900 dark:text-white/87'>Most liked Captions</div>
+        </button>
+      </div>
+
+      {/* <div className='flex gap-4 max-[560px]:flex-col'>
         <Link to='/upload' className='btn w-[25%] max-lg:w-[50%] min-w-[240px] text-center '>
           <div className='text-gray-900 dark:text-white/87'>Upload Another Image</div>
         </Link>
@@ -260,7 +285,18 @@ const Results = () => {
         <button onClick={handleNavigate} className='btn w-[25%] max-lg:w-[50%] min-w-[240px] text-center '>
           <div className='text-gray-900 dark:text-white/87'>Most liked Captions</div>
         </button>
-      </div>
+      </div> */}
+
+
+      {/* loading animation */}
+      {
+        loading ? (
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs ">
+            <div className="loader"></div> 
+          </div>
+        ) : null
+      }
+      
     </section>
   )
 }

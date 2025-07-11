@@ -61,11 +61,11 @@ const Home = () => {
         <section className='min-h-[90vh] w-full dark:bg-[#333333] bg-slate-100 flex flex-col justify-center items-center gap-2 py-4'>
           <p className='text-5xl font-bold text-[clamp(2rem,4vw,3.5rem)]'>How It Works</p>
           <p className='text-xl text-slate-700 dark:text-slate-300 text-[clamp(1rem,2vw,1.25rem)] w-[80%] sm:w-[60%] md:w-[55%] text-center'>Our AI-powered system analyzes your images and generates contextually relevant caption suggestions in seconds.</p>
-          <div className='flex max-md:flex-col gap-10 w-[75vw] text-center mt-12'>
+          <div className='flex max-md:flex-col max-md:items-center max-md:w-[150%] max-sm:w-[250%] gap-10 w-[75vw] text-center mt-12'>
             {
               howArray.map((data, index)=>{
                 return (
-                  <div key={index} className='card-effect-border group w-[33%] rounded-2xl p-4 flex flex-col justify-center items-center gap-4'>
+                  <div key={index} className='card-effect-border group w-[30%] rounded-2xl p-4 flex flex-col justify-center items-center gap-4'>
                     <div className='card-effect-overlay'></div>
                     <div className='card-effect-icon h-18 w-18 sm:h-20 sm:w-20 rounded-full flex justify-center items-center text-4xl bg-[#94A3B8] dark:bg-[#1a1a1a] text-slate-700 dark:text-slate-400'>
                       {data.icon}
@@ -83,7 +83,7 @@ const Home = () => {
         <section className='h-[65vh] w-full flex flex-col justify-center items-center'>
           
           <div className='text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gradient'> <TypewriterText text="Ready to Get Started?"/> </div>
-          <p className='text-xl text-center text-slate-700 dark:text-slate-300 mt-2'>Upload your first image and experience the power of AI-generated caption recommendations.</p>
+          <p className='text-xl text-center text-slate-700 dark:text-slate-300 mt-2 max-md:w-[90%]'>Upload your first image and experience the power of AI-generated caption recommendations.</p>
           <Link to='/upload' className='btn mt-10 flex justify-center items-center gap-2 text-gray-900 dark:text-white/87'>
             <i className='text-lg text-gray-900 dark:text-white/87'><FiUpload/></i> 
             <span className='text-gray-900 dark:text-white/87'>Upload Your Image</span> 

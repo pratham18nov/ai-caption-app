@@ -1,10 +1,9 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-
 /* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  background-image: url('./assets/unused/bg-2.svg');
+}
+.dark #root {
+  background-image: url('./assets/unused/subtle-prism.svg');
 } */

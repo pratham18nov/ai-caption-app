@@ -12,6 +12,10 @@ const SummaryApi = {
         url: `${backendDomain}/api/login`,
         method: "POST" 
     },
+    contactUs:{
+        url: `${backendDomain}/api/contact-us`,
+        method: "POST"
+    },
     userDetails:{
         url: `${backendDomain}/api/user-details`,
         method: "GET" 

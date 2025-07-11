@@ -1,8 +1,45 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+
+// Custom hook to listen for theme changes
+const useTheme = () => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const currentTheme = localStorage.getItem("theme") || "dark";
+      setTheme(currentTheme);
+    };
+
+    // Check theme on mount
+    checkTheme();
+
+    // Listen for storage changes
+    window.addEventListener('storage', checkTheme);
+    
+    // Create a custom event listener for theme changes
+    const handleThemeChange = () => checkTheme();
+    window.addEventListener('themeChange', handleThemeChange);
+
+    return () => {
+      window.removeEventListener('storage', checkTheme);
+      window.removeEventListener('themeChange', handleThemeChange);
+    };
+  }, []);
+
+  return theme;
+};
 
 const InteractiveCard = ({ children, className = '' }) => {
   const wrapperRef = useRef(null);
-  // const theme = localStorage.getItem("theme")
+  const theme = useTheme();
+
+  // Update background color when theme changes
+  useEffect(() => {
+    if (wrapperRef.current) {
+      const isDark = theme === "dark";
+      wrapperRef.current.style.background = isDark ? '#1a1a1a' : '#E2E8F0';
+    }
+  }, [theme]);
 
   const handleMouseMove = (e) => {
     const el = wrapperRef.current;
@@ -10,15 +47,14 @@ const InteractiveCard = ({ children, className = '' }) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 35;
-    const rotateY = -(x - centerX) / 35;
+    const centerX = rect.width / 4;
+    const centerY = rect.height / 4;
+    const rotateX = (y - centerY) / 30;
+    const rotateY = -(x - centerX) / 30;
 
     el.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-    // const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = localStorage.getItem("isDark")
+    const isDark = theme === "dark";
     const baseColor = isDark ? '#1a1a1a' : '#E2E8F0';
 
     el.style.background = `
@@ -32,10 +68,9 @@ const InteractiveCard = ({ children, className = '' }) => {
     const el = wrapperRef.current;
     el.style.transform = `rotateX(0deg) rotateY(0deg)`;
 
-    // const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = localStorage.getItem("isDark")
+    const isDark = theme === "dark";
     el.style.background = isDark ? '#1a1a1a' : '#E2E8F0';
-    // el.style.background = '#b9b7b7';
+    el.style.borderRadius = "0.5rem"; // Reset to rounded-lg
   };
 
   return (
@@ -44,9 +79,10 @@ const InteractiveCard = ({ children, className = '' }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={`
-        transition-[background] duration-200 ease-in-out
-        will-change-[background]
+        transition-all duration-200 ease-in-out
+        will-change-[background,transform,border-radius]
         border-2 rounded-lg  
+        hover:rounded-lg
         hover:[border-image:linear-gradient(90deg,#e63946,#f1fa8c,#2a9d8f,#457b9d)_1]
         ${className}
       `}
