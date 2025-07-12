@@ -53,7 +53,7 @@ const Home = () => {
             </div>
           </div>
           <InteractiveCard className='max-sm:min-w-[360px] max-lg:min-w-[50%] max-md:hidden'>
-            <img src={heroImg} alt='' className='max-lg:max-h-[1240px] max-lg:w-[1240px] rounded-lg'/>
+            <img src={heroImg} alt='' className='max-lg:max-h-[1240px] max-lg:w-[1240px] rounded-lg '/>
           </InteractiveCard>
         </section>
 

@@ -13,6 +13,8 @@ const updateUploadCountController = require('../controller/user/updateUploadCoun
 const contactController = require('../controller/contact/contact')
 const incrementCaptionsGenerated = require('../controller/user/incrementCaptionsGenerated')
 const incrementTotalLikesController = require('../controller/user/incrementTotalLikes')
+const userLikedCaptions = require('../controller/caption/userLikedCaptions')
+const delCapFromUserController = require('../controller/caption/delCapFromUser')
 
 
 //user routes
@@ -29,7 +31,9 @@ router.post("/increment-total-likes", authToken, incrementTotalLikesController)
 
 // caption routes
 router.post('/save-caption', authToken, saveCaptionController)
-router.get('/get-liked-captions', authToken, mostLikedCaptions)
+router.get('/most-liked-captions', authToken, mostLikedCaptions)
+router.get('/user-liked-captions', authToken, userLikedCaptions)
+router.delete('/remove-liked-caption', authToken, delCapFromUserController)
 
 
 //contact

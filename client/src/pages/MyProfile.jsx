@@ -67,7 +67,7 @@ const MyProfile = () => {
         <section className='max-md:mt-12'>
           <div className='flex justify-between px-2'>
             <p className='pt-4 text-2xl font-bold'>Liked Captions</p>
-            <button className='btn '>View all</button>
+            <Link to={'/user-liked-captions'} className='btn '>View all</Link>
           </div>
           <div>
             <div className='flex max-md:flex-col gap-4 mt-4'>
@@ -96,7 +96,7 @@ const MyProfile = () => {
           {/* counts */}
           <section className='md:w-[45%] '>
               <p className='pt-4 text-2xl font-bold'>Statistics</p>
-              <div className='flex max-[545px]:flex-col justify-between max-[545px]:items-center max-[545px]:gap-4 mt-4'>
+              <div className='flex max-[545px]:flex-col justify-between max-[545px]:items-center max-[545px]:gap-4 mt-4 text-center'>
                 <div className='stat-btn min-w-36 flex flex-col justify-center items-center  '>
                   <p className='text-4xl'>{user?.statistics.uploadCount}</p>
                   <span className='opacity-75'>Uploads</span>

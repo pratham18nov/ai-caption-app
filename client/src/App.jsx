@@ -19,6 +19,7 @@ import ContactUs from './pages/ContactUs';
 // import lightBgImg from './assets/unused/bg-5.svg'
 import lightBgImg from './assets/unused/subtle-prism.svg'
 import darkBgImg from './assets/unused/subtle-prism.svg'
+import UserLikedCaptions from './pages/UserLikedCaptions';
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
             <Route path="/most-liked-captions" element={<MostLikedCaptions />} />
             <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/user-liked-captions" element={<UserLikedCaptions />} />
 
             {/* <Route path="/testing" element={<Test/>} /> */}
           </Routes>
