@@ -66,28 +66,32 @@ const UserLikedCaptions = () => {
 
     const fetchCaptions = async() =>{
         setLoading(true)
+        try {
         const response = await fetch(`${SummaryApi.userLikedCaptions.url}?userId=${userId}`, {
             method:SummaryApi.userLikedCaptions.method,
             headers: {
-                'Authorization': `Bearer ${authToken}`,
+            'Authorization': `Bearer ${authToken}`,
             },
             credentials: 'include',
         })
         const responseData = await response.json()
         if(responseData.success){
-            setCapArray(responseData.data)
-            // setCapArray(array)
+            const extractFive = responseData.data.slice(0, 5); 
+            setCapArray(extractFive);
             console.log('responseData',responseData.message)
             console.log('array',capArray)
         }
-        setLoading(false)
+        } 
+        catch (error) {
+            console.log("Error fetching liked captions", error)
+        }
+        finally{
+            setLoading(false)
+        }
     }
 
     useEffect(()=>{
-        // setLoading(true)
         fetchCaptions()
-        // console.log('Updated captions array:', capArray)
-        // setLoading(false)
     }, [])
 
 

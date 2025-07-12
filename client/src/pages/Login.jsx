@@ -57,7 +57,7 @@ const Login = () => {
             localStorage.setItem("userData", JSON.stringify(dataApi.userData));
             toast.success(dataApi.message)
             navigate(from, {replace: true})
-            navigate('/login', { state: { from: location } })
+            // navigate('/login', { state: { from: location } })
         }
         if(dataApi.error){
             toast.error(dataApi.message)

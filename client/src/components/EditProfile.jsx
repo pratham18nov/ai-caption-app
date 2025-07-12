@@ -29,6 +29,7 @@ const EditProfile = ( {open, onClose} ) => {
     instagramUrl: user?.socialLinks?.instagramUrl || "",
     twitterUrl: user?.socialLinks?.twitterUrl || "",
   })
+  const [errors, setErrors] = useState({})
   // const dispatch = useDispatch()
 
   const handleUploadPic = async (e) => {
@@ -52,6 +53,25 @@ const EditProfile = ( {open, onClose} ) => {
       })
   }
 
+  // Social media URL validation functions
+  const validateFacebookUrl = (url) => {
+    if (!url) return true; // Empty is valid
+    const facebookRegex = /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9.]+\/?$/;
+    return facebookRegex.test(url);
+  };
+
+  const validateInstagramUrl = (url) => {
+    if (!url) return true; // Empty is valid
+    const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?$/;
+    return instagramRegex.test(url);
+  };
+
+  const validateTwitterUrl = (url) => {
+    if (!url) return true; // Empty is valid
+    const twitterRegex = /^https:\/\/(www\.)?twitter\.com\/[A-Za-z0-9_]{1,15}\/?$/;
+    return twitterRegex.test(url);
+  };
+
   const handleOnChange = (e) => {
     const { name, value } = e.target
     setEditData((prev) => {
@@ -60,49 +80,75 @@ const EditProfile = ( {open, onClose} ) => {
           [name]: value
         }
     })
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }))
+    }
   }
   console.log("input data", editData)
 
   const handleSubmit = async(e) =>{
     e.preventDefault();
     setLoading(true)
-    // const updatedFields = {}
-    // for(let key in editData){
-    //   if(editData[key] !== user[key]){
-    //     updatedFields[key] = editData[key]
-    //   }
-    // }
+    
+    // Validate social media URLs
+    const newErrors = {};
+    
+    if (editData.facebookUrl && !validateFacebookUrl(editData.facebookUrl)) {
+      newErrors.facebookUrl = "Please enter a valid Facebook URL (e.g., https://facebook.com/username)";
+    }
+    if (editData.instagramUrl && !validateInstagramUrl(editData.instagramUrl)) {
+      newErrors.instagramUrl = "Please enter a valid Instagram URL (e.g., https://instagram.com/username)";
+    }
+    if (editData.twitterUrl && !validateTwitterUrl(editData.twitterUrl)) {
+      newErrors.twitterUrl = "Please enter a valid Twitter URL (e.g., https://twitter.com/username)";
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setLoading(false);
+      return;
+    }
 
-    // if(Object.keys(updatedFields).length===0){
-    //   toast.warning("No changes made")
-    //   setLoading(false)
-    //   return;
-    // }
+    // Check if any changes were made
+    const originalUser = {
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      profilePic: user?.profilePic || "",
+      facebookUrl: user?.socialLinks?.facebookUrl || "",
+      instagramUrl: user?.socialLinks?.instagramUrl || "",
+      twitterUrl: user?.socialLinks?.twitterUrl || "",
+    };
 
     const isChanged = Object.keys(editData).some(
-      (key) => editData[key] !== user[key]
+      (key) => editData[key] !== originalUser[key]
     );
+    
     if (!isChanged) {
       toast.warning("No changes made");
       setLoading(false);
       return;
     }
 
+    // Prepare data in the format expected by backend
     const updatedFields = {
       userId: user._id,
       firstName: editData.firstName,
       lastName: editData.lastName,
       profilePic: editData.profilePic,
-      facebookUrl: editData.facebookUrl,
-      instagramUrl: editData.instagramUrl,
-      twitterUrl: editData.twitterUrl,
+      socialLinks: {
+        facebookUrl: editData.facebookUrl || undefined,
+        instagramUrl: editData.instagramUrl || undefined,
+        twitterUrl: editData.twitterUrl || undefined,
+      }
     };
-
-    // const userId = user._id
 
     try {
       const token = localStorage.getItem("authToken")
-      // console.log(SummaryApi.updateProfile.url)
 
       const response = await fetch(SummaryApi.updateProfile.url, {
         method: SummaryApi.updateProfile.method,
@@ -116,19 +162,25 @@ const EditProfile = ( {open, onClose} ) => {
 
       const dataApi = await response.json()
       if(dataApi.success){
-        // dispatch( updateUser(dataApi.data) )
+        // Update local storage with new user data
+        const updatedUser = { 
+          ...user, 
+          ...dataApi.data,
+          socialLinks: dataApi.data?.socialLinks || {}
+        };
+        localStorage.setItem("userData", JSON.stringify(updatedUser));
+        
         navigate('/my-profile')
-        // onClose()
+        onClose()
         toast.success(dataApi.message)
       }
       if(dataApi.error){
-        // toast.error("inside editProfile", dataApi.message, dataApi.error)
         toast.error(dataApi.message)
       }
     } 
     catch (error) {
       console.log("error occured in EditProfile", error)
-      toast.warning("Error updating profile")
+      toast.error("Error updating profile")
     }
     setLoading(false)
   }
@@ -186,19 +238,46 @@ const EditProfile = ( {open, onClose} ) => {
                 <input type="text" placeholder="Last name" name="lastName" className="w-full input-field" value={editData.lastName} onChange={handleOnChange} />
               </div>
               <span className="input-field h-12 cursor-not-allowed">{editData?.email}</span>
-
+              
+              {/* social links */}
               <div className="flex items-center gap-2">
                 <i className="stat-btn text-lg"> <MdFacebook /> </i>
-                <input type='text' placeholder="Facebook handle" name="facebookUrl" className="w-full input-field" value={editData.facebookUrl} onChange={handleOnChange}/>
+                <input 
+                  type='text' 
+                  placeholder="Facebook URL (optional)" 
+                  name="facebookUrl" 
+                  className={`w-full input-field ${errors.facebookUrl ? 'border-red-500' : ''}`} 
+                  value={editData.facebookUrl} 
+                  onChange={handleOnChange}
+                />
               </div>
-              <div className=" flex items-center gap-2">
+              {errors.facebookUrl && <p className="text-red-500 text-sm -mt-2">{errors.facebookUrl}</p>}
+              
+              <div className="flex items-center gap-2">
                 <i className="stat-btn text-lg"> <GrInstagram /> </i>
-                <input type='text' placeholder="Instagram handle" name="instagramUrl" className="w-full input-field" value={editData.instagramUrl} onChange={handleOnChange}/>
+                <input 
+                  type='text' 
+                  placeholder="Instagram URL (optional)" 
+                  name="instagramUrl" 
+                  className={`w-full input-field ${errors.instagramUrl ? 'border-red-500' : ''}`} 
+                  value={editData.instagramUrl} 
+                  onChange={handleOnChange}
+                />
               </div>
+              {errors.instagramUrl && <p className="text-red-500 text-sm -mt-2">{errors.instagramUrl}</p>}
+              
               <div className="flex items-center gap-2">
                 <i className="stat-btn text-lg"> <FaXTwitter /> </i>
-                <input type='text' placeholder="Twitter handle" name="twitterUrl" className="w-full input-field" value={editData.twitterUrl} onChange={handleOnChange}/>
+                <input 
+                  type='text' 
+                  placeholder="Twitter URL (optional)" 
+                  name="twitterUrl" 
+                  className={`w-full input-field ${errors.twitterUrl ? 'border-red-500' : ''}`} 
+                  value={editData.twitterUrl} 
+                  onChange={handleOnChange}
+                />
               </div>
+              {errors.twitterUrl && <p className="text-red-500 text-sm -mt-2">{errors.twitterUrl}</p>}
             </div>
           </div>
 

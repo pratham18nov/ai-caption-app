@@ -33,7 +33,7 @@ const SummaryApi = {
         method: "GET" 
     },
     updateProfile:{
-        url: `${backendDomain}/api/update-proflie`,
+        url: `${backendDomain}/api/update-profile`,
         method: "PUT" 
     },
     userLikedCaptions:{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import userImg from '../assets/user.png'
 import {motion} from 'motion/react'
 import { MdFacebook } from "react-icons/md";
@@ -6,50 +6,72 @@ import { GrInstagram } from "react-icons/gr";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router-dom';
 import EditProfile from '../components/EditProfile';
+import SummaryApi from '../helpers/SummaryApi';
 
-// const MyProfile = ({user}) => {
 const MyProfile = () => {
 
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [showUpdateBox, setShowUpdateBox] = useState(false)
+  const [capArray, setCapArray] = useState([])
 
-  const user = JSON.parse(localStorage.getItem("userData"))
+  //user 
+  const authToken = localStorage.getItem("authToken");
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const userId = user?._id;
 
-  const capArray = [
-    {
-      id: '1',
-      title: "A serene mountain landscape with a crystal clear lake reflecting the snow-capped peaks",
-    },
-    {
-      id: '2',
-      title: "Majestic mountains rising above a tranquil alpine lake at sunset",
-    },
-    {
-      id: '3',
-      title: "Nature's mirror: perfect mountain reflections in a pristine lake",
-    },
-    {
-      id: '4',
-      title: "Breathtaking view of mountain ranges surrounding a peaceful lake",
-    },
-    {
-      id: '5',
-      title: "The calm waters of a mountain lake perfectly mirroring the surrounding peaks",
-    },
-  ]
+  // const capArray = [
+  //   {
+  //     id: '1',
+  //     title: "A serene mountain landscape with a crystal clear lake reflecting the snow-capped peaks",
+  //   },
+  //   {
+  //     id: '2',
+  //     title: "Majestic mountains rising above a tranquil alpine lake at sunset",
+  //   },
+  //   {
+  //     id: '3',
+  //     title: "Nature's mirror: perfect mountain reflections in a pristine lake",
+  //   },
+  //   {
+  //     id: '4',
+  //     title: "Breathtaking view of mountain ranges surrounding a peaceful lake",
+  //   },
+  //   {
+  //     id: '5',
+  //     title: "The calm waters of a mountain lake perfectly mirroring the surrounding peaks",
+  //   },
+  // ]
 
-  // const handleEdit = (e) =>{
-  //   e.preventDefault()
-  //   navigate('/edit-profile')
-  // }
-
-  const handleSave = () =>{
+  const fetchCaptions = async() =>{
+    setLoading(true)
     try {
-      console.log("first")
-    } catch (err) {
-      console.log("first", err)
+      const response = await fetch(`${SummaryApi.userLikedCaptions.url}?userId=${userId}`, {
+        method:SummaryApi.userLikedCaptions.method,
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+        },
+        credentials: 'include',
+      })
+      const responseData = await response.json()
+      if(responseData.success){
+        const extractFive = responseData.data.slice(0, 5); 
+        setCapArray(extractFive);
+        console.log('responseData',responseData.message)
+        console.log('array',capArray)
+      }
+    } 
+    catch (error) {
+      console.log("Error fetching liked captions", error)
+    }
+    finally{
+      setLoading(false)
     }
   }
+
+  useEffect(()=>{
+    fetchCaptions()
+  }, [])
 
   return (
     <section className='px-8 flex flex-col gap-4 max-md:mt-24'>
@@ -80,7 +102,7 @@ const MyProfile = () => {
                         transition={{duration:1, delay:index*1/3,}}
                         style={{zIndex: data.length-index}}
                         className='border border-slate-700 rounded-lg p-4 flex flex-col gap-4 bg-[#E2E8F0] dark:bg-[#1a1a1a]'>
-                        <p className='text-slate-700 dark:text-slate-300'>{data.title}</p>
+                        <p className='text-slate-700 dark:text-slate-300'>{data.caption}</p>
                       </motion.div> 
                     )
                   })
@@ -116,14 +138,48 @@ const MyProfile = () => {
           <section className='md:w-[45%] '>
               <p className='pt-4 text-2xl font-bold '>Social Links</p>
               <div className='flex max-[545px]:flex-col justify-between max-[545px]:items-center max-[545px]:gap-4 mt-4'>
-                <Link to={''} className='stat-btn text-4xl min-w-36 flex justify-center items-center'><MdFacebook/></Link>
-                <Link to={''} className='stat-btn text-4xl min-w-36 flex justify-center items-center'><GrInstagram/></Link>
-                <Link to={''} className='stat-btn text-4xl min-w-36 flex justify-center items-center'><FaXTwitter/></Link>
+                {user?.socialLinks?.facebookUrl ? (
+                  <a href={user.socialLinks.facebookUrl} target="_blank" rel="noopener noreferrer" className='stat-btn text-4xl min-w-36 flex justify-center items-center hover:bg-gray-700 cursor-pointer transition-all' >
+                    <MdFacebook/>
+                  </a>
+                ) : (
+                  <div className='stat-btn text-4xl min-w-36 flex justify-center items-center opacity-50 cursor-not-allowed'>
+                    <MdFacebook/>
+                  </div>
+                )}
+                
+                {user?.socialLinks?.instagramUrl ? (
+                  <a href={user.socialLinks.instagramUrl} target="_blank" rel="noopener noreferrer" className='stat-btn text-4xl min-w-36 flex justify-center items-center hover:bg-gray-700 cursor-pointer transition-all' >
+                    <GrInstagram/>
+                  </a>
+                ) : (
+                  <div className='stat-btn text-4xl min-w-36 flex justify-center items-center opacity-50 cursor-not-allowed'>
+                    <GrInstagram/>
+                  </div>
+                )}
+                
+                {user?.socialLinks?.twitterUrl ? (
+                  <a href={user.socialLinks.twitterUrl} target="_blank" rel="noopener noreferrer" className='stat-btn text-4xl min-w-36 flex justify-center items-center hover:bg-gray-700 cursor-pointer transition-all' >
+                    <FaXTwitter/>
+                  </a>
+                ) : (
+                  <div className='stat-btn text-4xl min-w-36 flex justify-center items-center opacity-50 cursor-not-allowed'>
+                    <FaXTwitter/>
+                  </div>
+                )}
               </div>
           </section>
         </section>
 
-        <EditProfile open={showUpdateBox} onClose={()=>setShowUpdateBox(false)} user={user} onSave={handleSave} />
+        <EditProfile open={showUpdateBox} onClose={()=>setShowUpdateBox(false)} />
+
+        {
+          loading ? (
+            <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs ">
+              <div className="loader"></div> 
+            </div>
+          ) : null
+        }
     </section>
   )
 }
