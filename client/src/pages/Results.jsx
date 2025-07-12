@@ -28,7 +28,7 @@ const Results = () => {
   
   const authToken = localStorage.getItem("authToken")
   const user = JSON.parse(localStorage.getItem("userData"))
-  const userId = user._id
+  const userId = user?._id
 
   const copyText = async(text, index) =>{
     try{
@@ -62,8 +62,31 @@ const Results = () => {
       // })
 
       if (!capSaved.includes(index)) {
-        saveCaption(event, index);
-        setCapSaved(prev => [...prev, index]);
+        const success = await saveCaption(event, index);
+        if(success){
+            setCapSaved(prev => [...prev, index]);
+            
+            // Increment totalLikes in user statistics
+            try {
+                const response = await fetch(SummaryApi.incrementTotalLikes.url, {
+                    method: SummaryApi.incrementTotalLikes.method,
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ userId: userId })
+                });
+                const responseData = await response.json();
+                if (responseData.success) {
+                    console.log('Total likes incremented successfully');
+                } else {
+                    console.log('Failed to increment total likes:', responseData.message);
+                }
+            } catch (error) {
+                console.error('Error incrementing total likes:', error);
+            }
+        }
       }
     }
     catch(error){
@@ -95,13 +118,16 @@ const Results = () => {
 
       if(dataApi.success){
         console.log(dataApi.message)
+        return true
       }
       if(dataApi.error){
         console.log("Error while saving caption", dataApi.message)
+        return false
       }
     } 
     catch(error){
       console.error("Error occurred in storing caption ", error)
+      return false
     }
   }
 
@@ -161,6 +187,33 @@ const Results = () => {
     // const captions = await GenerateCaptions(image)
     // const captions = await GenerateCaptions(image, mood)
     // console.log("captions generated", captions)
+
+    // Increment captionsGenerated if user is logged in
+    if (isLoggedIn()) {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      const authToken = localStorage.getItem("authToken");
+      try {
+        const response = await fetch(SummaryApi.incrementCaptionsGenerated.url, {
+          method: SummaryApi.incrementCaptionsGenerated.method,
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ userId: user._id })
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          console.log('Captions generated count incremented');
+        } else {
+          console.log('Failed to increment captions generated:', responseData.message);
+        }
+      } 
+      catch (error) {
+        console.error('Error incrementing captions generated:', error);
+      }
+    }
+
     setLoading(false)
   }
 

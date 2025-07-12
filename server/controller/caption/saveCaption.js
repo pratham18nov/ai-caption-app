@@ -6,67 +6,63 @@ async function saveCaptionController(req, res){
         const {caption, userId} = req.body
         if(!caption || !userId) throw new Error("Caption or userId not received")
         
-        // const normalizedCaption = caption.trim().toLowerCase()
+        // Check if user has already liked this caption
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false,
+                error: true
+            });
+        }
 
+        // Find the caption in the database
         const exists = await saveCaptionsModel.findOne( {caption} )
-        if(exists){
-            const updated = await saveCaptionsModel.findByIdAndUpdate(
-                exists._id, 
-                { 
-                    $inc: { likeCount: 1}, 
-                    $addToSet: {likedUsers: userId},
-                },
-                { new : true }
-            )
+        if (!exists) {
+            return res.status(404).json({
+                message: "Caption not found",
+                success: false,
+                error: true
+            });
+        }
 
-            // Update user's captionsLiked array (most recent 50 only)
-            await userModel.findByIdAndUpdate(userId, {
-                $push: {
-                    captionsLiked: {
-                        $each: [updated._id],
-                        $position: 0,
-                        $slice: 50
-                    }
-                }
-            })
-
+        // Check if user has already liked this caption
+        if (user.captionsLiked.includes(exists._id)) {
             return res.status(200).json({
-                message: "Caption like Count updated",
-                data: updated,
+                message: "Caption already liked by user",
+                data: exists,
                 success: true,
                 error: false
-            })
+            });
         }
-        else{
-            const likeCount = 0;
-            
-            const payload = {
-                ...req.body,
-                likeCount: Number(likeCount)+1,
-                likedUsers: [userId]
-            }
 
-            const store = new saveCaptionsModel(payload)
-            const stored = await store.save()
+        // Update the caption's like count and add user to likedUsers
+        const updated = await saveCaptionsModel.findByIdAndUpdate(
+            exists._id, 
+            { 
+                $inc: { likeCount: 1}, 
+                $addToSet: {likedUsers: userId},
+            },
+            { new : true }
+        )
 
-            // Update user's captionsLiked array (most recent 50 only)
-            await userModel.findByIdAndUpdate(userId, {
-                $push: {
-                    captionsLiked: {
-                        $each: [stored._id],
-                        $position: 0,
-                        $slice: 50
-                    }
+        // Update user's captionsLiked array (most recent 50 only)
+        await userModel.findByIdAndUpdate(userId, {
+            $push: {
+                captionsLiked: {
+                    $each: [updated._id],
+                    $position: 0,
+                    $slice: 50
                 }
-            })
+            }
+        })
 
-            res.status(200).json({
-                message:"Caption stored",
-                data: stored,
-                success: true,
-                error: false
-            })
-        }
+        return res.status(200).json({
+            message: "Caption like Count updated",
+            data: updated,
+            success: true,
+            error: false
+        })
     } 
     catch (err) {
         res.json({

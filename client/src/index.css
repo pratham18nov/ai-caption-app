@@ -77,7 +77,7 @@ h1 {
   cursor:not-allowed;
   /* transition: border-color 0.25s; */
 }
-.btn:hover {
+.btn:hover, .btn-2:hover {
   border-color: #646cff; 
 }
 .btn:focus, .btn:focus-visible{

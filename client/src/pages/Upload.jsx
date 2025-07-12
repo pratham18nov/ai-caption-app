@@ -7,6 +7,9 @@ import GenerateCaptions from '../components/GenerateCaptions'
 import imageTobase64 from '../helpers/imageTobase64'
 import TypewriterText from '../animations/TypewriterText'
 import ColorExtractor from '../components/ColorExtractor'
+import SummaryApi from '../helpers/SummaryApi'
+import isLoggedIn from '../helpers/isLoggedIn'
+import { toast } from 'react-toastify'
 // import '../animations/'
 import InteractiveCard from '../animations/InteractiveCard'
 
@@ -62,11 +65,38 @@ const Upload = () => {
 
   const genCaps = async() =>{
     setLoading(true)
-
     // const captions = await GenerateCaptions(imageArray)
     // const captions = await GenerateCaptions(imageArray, mood)
+
+    // Update upload count if user is logged in
+    try {
+      if (isLoggedIn()) {
+        const user = JSON.parse(localStorage.getItem("userData"));
+        const authToken = localStorage.getItem("authToken");
+        
+        const response = await fetch(SummaryApi.updateUploadCount.url, {
+          method: SummaryApi.updateUploadCount.method,
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ userId: user._id })
+        });
+
+        const responseData = await response.json();
+        if (responseData.success) {
+          console.log('Upload count updated successfully');
+        } else {
+          console.log('Failed to update upload count:', responseData.message);
+        }
+      }
+    } 
+    catch (error) {
+      console.error('Error updating upload count:', error);
+    }
+
     navigate('/results', {state: {image: imageArray, dominantColor:dominantColor, invertedColor:invertedColor}})
-    // console.log("captions generated", captions)
     setLoading(false)
   }
   
@@ -76,9 +106,9 @@ const Upload = () => {
       <p className='text-xl max-sm:text-sm text-slate-700 dark:text-slate-300 mt-2 text-center'>Upload an image to get AI-powered caption recommendations.</p>
 
       
-      <div className='min-h-[420px] max-sm:h-[500px] min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 py-4 flex flex-col justify-around items-center gap-4 relative  '>
+      <div className='h-full min-h-[420px]  min-w-[55%] max-sm:w-[95%] border border-slate-700 rounded-lg mt-10 py-4 flex flex-col justify-around items-center gap-4 relative  '>
         
-        <InteractiveCard className='p-10 w-[95%] max-sm:w-[80%] border border-dashed border-slate-500 hover:rounded-lg flex justify-center items-center'>
+        <InteractiveCard className='p-10 w-[95%] max-sm:w-[90%] border border-dashed border-slate-500 hover:rounded-lg flex justify-center items-center'>
           <div>
             { imageArray.length===0 ? (
                   <div className='flex flex-col justify-center items-center gap-4  '>
@@ -107,9 +137,9 @@ const Upload = () => {
           </div>
         </InteractiveCard>
 
-        <div className='flex items-center gap-4'>
+        <div className='flex max-sm:flex-col items-center gap-2'>
           <span className='opacity-75'>Select a mood:</span>
-          <div className='flex gap-2 flex-wrap'>
+          <div className='flex gap-2 flex-wrap justify-center'>
             <button onClick={()=>setMood("Happy")} className={`h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center cursor-pointer ${mood==="Happy" ? 'bg-white dark:bg-black' : null}`} style={{border:`2px solid ${invertedColor}`}}>Happy</button>
             <button onClick={()=>setMood("Sarcastic")} className={`h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center cursor-pointer ${mood==="Sarcastic" ? 'bg-white dark:bg-black' : null}`} style={{border:`2px solid ${invertedColor}`}}>Sarcastic</button>
             <button onClick={()=>setMood("Playful")} className={`h-5 w-fit p-4 border border-slate-700 rounded flex justify-center items-center cursor-pointer ${mood==="Playful" ? 'bg-white dark:bg-black' : null}`} style={{border:`2px solid ${invertedColor}`}}>Playful</button>
@@ -120,7 +150,7 @@ const Upload = () => {
         {imageArray[0] && <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
 
 
-        <button className='w-84 max-sm:w-70 text-center' style={imageArray.length !== 0 ? { borderRadius: '12px', boxShadow: `0px 0px 10px 0px ${invertedColor}, inset 0px 0px 20px 0px ${invertedColor}` } : {}} >
+        <button className='w-84 max-sm:w-70 text-center mt-8' style={imageArray.length !== 0 ? { borderRadius: '12px', boxShadow: `0px 0px 10px 0px ${invertedColor}, inset 0px 0px 20px 0px ${invertedColor}` } : {}} >
           {
             imageArray.length !== 0 ? (
               <div onClick={genCaps}>
@@ -133,7 +163,7 @@ const Upload = () => {
         </button>
       </div>
       
-      <span className='opacity-50 tracking-wider text-center'>For added privacy, we do not store your images</span>
+      <span className='max-w-[90%] opacity-50 tracking-wider text-center'>For added privacy, we do not store your images</span>
 
       {/* loading animation */}
       {

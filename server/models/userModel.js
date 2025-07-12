@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
         totalLikes:{
             type:Number,
             default: 0,
+        },
+        captionGenerated:{
+            type:Number,
+            default: 0,
         }
     },
 

@@ -9,7 +9,10 @@ const userLogoutController = require('../controller/user/userLogout')
 const saveCaptionController = require('../controller/caption/saveCaption')
 const mostLikedCaptions = require('../controller/caption/mostLikedCaptions')
 const updateUserController = require('../controller/user/updateUser')
+const updateUploadCountController = require('../controller/user/updateUploadCount')
 const contactController = require('../controller/contact/contact')
+const incrementCaptionsGenerated = require('../controller/user/incrementCaptionsGenerated')
+const incrementTotalLikesController = require('../controller/user/incrementTotalLikes')
 
 
 //user routes
@@ -19,6 +22,9 @@ router.get('/user-details', userDetailsController)
 // router.get('/user-details', authToken, userDetailsController)
 router.get("/user-logout", userLogoutController)
 router.put("/update-proflie", authToken, updateUserController)
+router.post("/update-upload-count", authToken, updateUploadCountController)
+router.post("/increment-captions-generated", authToken, incrementCaptionsGenerated)
+router.post("/increment-total-likes", authToken, incrementTotalLikesController)
 
 
 // caption routes

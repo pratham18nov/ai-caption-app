@@ -25,7 +25,7 @@ const TypewriterText = ({ text }) => {
       <style>{keyframes}</style>
       <p
         ref={ref}
-        className="whitespace-nowrap overflow-hidden border-r border-black dark:border-slate-300 inline-block"
+        className="whitespace-nowrap overflow-hidden max-[375px]:text-3xl border-r border-black dark:border-slate-300 inline-block"
         style={{
           width: hasAnimated ? `${characterCount}ch` : '0ch',
           animation: hasAnimated

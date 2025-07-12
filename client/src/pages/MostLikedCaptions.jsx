@@ -10,595 +10,76 @@ import isLoggedIn from '../helpers/isLoggedIn'
 import TypewriterText from '../animations/TypewriterText'
 import {motion} from 'motion/react'
 import AnimateNumber from '../animations/AnimateNumber';
-
-const array = [
-    {
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },{
-    "_id": "68297c21fdb7b5b7ae3ab101",
-    "caption": "Golden rays of the sun illuminating the snow-capped peaks",
-    "likeCount": 12,
-    "tags": ["sunset", "mountains", "nature", "scenery", "landscape", "golden hour"],
-    "likedUsers": ["user123", "user456"],
-    "createdAt": "2025-05-20T08:32:11.000Z",
-    "updatedAt": "2025-07-08T10:11:05.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c34fdb7b5b7ae3ab102",
-    "caption": "Dense fog rolling over the forested valley at dawn",
-    "likeCount": 7,
-    "tags": ["fog", "forest", "valley", "morning", "moody", "mist"],
-    "likedUsers": [],
-    "createdAt": "2025-05-21T06:05:22.000Z",
-    "updatedAt": "2025-07-08T10:12:41.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c4bfdb7b5b7ae3ab103",
-    "caption": "Crystal clear reflections on a tranquil alpine lake",
-    "likeCount": 9,
-    "tags": ["lake", "reflection", "alpine", "calm", "peaceful", "sky"],
-    "likedUsers": ["user789"],
-    "createdAt": "2025-05-22T09:14:33.000Z",
-    "updatedAt": "2025-07-08T10:13:59.000Z",
-    "__v": 0
-  },
-  {
-    "_id": "68297c5ffdb7b5b7ae3ab104",
-    "caption": "A lonely boat floating in the stillness of the morning lake",
-    "likeCount": 6,
-    "tags": ["boat", "lake", "minimal", "stillness", "isolation", "calm"],
-    "likedUsers": [],
-    "createdAt": "2025-05-23T04:21:40.000Z",
-    "updatedAt": "2025-07-08T10:14:50.000Z",
-    "__v": 0
-  },
-]
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import Select from 'react-select';
+import useTheme from '../hooks/useTheme';
 
 
 const MostLikedCaptions = () => {
     const [loading, setLoading] = useState(false)
     const [capArray, setCapArray] = useState([])
     const [copiedIndex, setCopiedIndex] = useState(null)
-    const [likedIndex, setLikedIndex] = useState([])
-    const [capSaved, setCapSaved] = useState([])
+    const [likedCaptions, setLikedCaptions] = useState(new Set())
+    const [capSaved, setCapSaved] = useState(new Set())
     const [translatedTexts, setTranslatedTexts] = useState([])
     const [translatedIndex, setTranslatedIndex] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedTags, setSelectedTags] = useState([]);
     const itemsPerPage = 10;
+    const theme = useTheme();
+    const isDarkMode = () => theme === 'dark';
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+
+    // Extract all unique tags from capArray
+    const allTags = Array.from(new Set(capArray.flatMap(item => item.tags)));
+    const tagOptions = allTags.map(tag => ({ value: tag, label: tag }));
+
+    // Filter and sort captions
+    const filteredAndSortedCaptions = capArray
+        .filter(item =>
+            selectedTags.length === 0 || selectedTags.every(tag => item.tags.includes(tag))
+        )
+        .sort((a, b) => b.likeCount - a.likeCount);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = capArray.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filteredAndSortedCaptions.slice(indexOfFirstItem, indexOfLastItem);
     
     const authToken = localStorage.getItem("authToken");
     const user = JSON.parse(localStorage.getItem("userData"));
-    const userId = user._id;
+    const userId = user?._id;
+
+    // Initialize page from URL parameter
+    useEffect(() => {
+        const pageFromUrl = parseInt(searchParams.get('page')) || 1;
+        setCurrentPage(pageFromUrl);
+    }, [searchParams]);
+
+    // Update URL when page changes
+    const updatePageInUrl = (newPage) => {
+        setSearchParams({ page: newPage.toString() });
+    };
 
     const fetchCaptions = async() =>{
-        setLoading(true)
-        const response = await fetch(SummaryApi.getAllCaptions.url, {
-            method:SummaryApi.getAllCaptions.method,
-            headers: {
-                'Authorization': `Bearer ${authToken}`,
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-        })
-        const responseData = await response.json()
-        if(responseData.success){
-            // setCapArray(responseData.data)
-            setCapArray(array)
-            console.log('responseData',responseData.message)
-            console.log('array',capArray)
-        }
-        setLoading(false)
+      setLoading(true)
+      const response = await fetch(SummaryApi.getAllCaptions.url, {
+          method:SummaryApi.getAllCaptions.method,
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+      })
+      const responseData = await response.json()
+      if(responseData.success){
+          setCapArray(responseData.data)
+          // setCapArray(array)
+          console.log('responseData',responseData.message)
+          console.log('array',capArray)
+      }
+      setLoading(false)
     }
 
     useEffect(()=>{
@@ -608,9 +89,30 @@ const MostLikedCaptions = () => {
         // setLoading(false)
     }, [])
 
+
+
+    // useEffect(() => {
+    //     console.log('Updated capArray:', capArray); // This will reflect the updated array
+    // }, [capArray]);
+
+    // Validate page number after data is loaded
     useEffect(() => {
-        console.log('Updated capArray:', capArray); // This will reflect the updated array
-    }, [capArray]);
+        if (capArray.length > 0) {
+            const maxPage = Math.ceil(capArray.length / itemsPerPage);
+            const currentPageFromUrl = parseInt(searchParams.get('page')) || 1;
+            
+            if (currentPageFromUrl > maxPage) {
+                // If the page from URL is beyond available pages, go to the last page
+                const newPage = maxPage;
+                setCurrentPage(newPage);
+                updatePageInUrl(newPage);
+            } else if (currentPageFromUrl < 1) {
+                // If the page from URL is less than 1, go to page 1
+                setCurrentPage(1);
+                updatePageInUrl(1);
+            }
+        }
+    }, [capArray.length, searchParams]);
 
     const copyText = async(text, index) =>{
         try{
@@ -623,24 +125,51 @@ const MostLikedCaptions = () => {
         }
     }
 
-    const handleLike = async(event, index) =>{
+    const handleLike = async(event, captionId) =>{
         if(!isLoggedIn()){
             toast.warning("Please login")
             return 
         }
 
         try{
-            setLikedIndex((prev)=>
-                prev.includes(index) ? prev.filter((i)=>i!==index) : [...prev, index]
-            //.filter() creates a new array containing only elements not equal to index.
-            )
-            if (!capSaved.includes(index)) {
-                const success = await saveCaption(event, index);
+            setLikedCaptions((prev)=>{
+                const newSet = new Set(prev);
+                if (newSet.has(captionId)) {
+                    newSet.delete(captionId);
+                } else {
+                    newSet.add(captionId);
+                }
+                return newSet;
+            });
+
+            if (!capSaved.has(captionId)) {
+                const success = await saveCaption(event, captionId);
                 if(success){
                     setCapArray(prev => prev.map(
-                        (item,i)=> i===index ? {...item, likeCount:item.likeCount+1} : item)
+                        (item)=> item._id === captionId ? {...item, likeCount:item.likeCount+1} : item)
                     )
-                    setCapSaved(prev => [...prev, index]);
+                    setCapSaved(prev => new Set([...prev, captionId]));
+                    
+                    // Increment totalLikes in user statistics
+                    try {
+                        const response = await fetch(SummaryApi.incrementTotalLikes.url, {
+                            method: SummaryApi.incrementTotalLikes.method,
+                            headers: {
+                                'Authorization': `Bearer ${authToken}`,
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify({ userId: userId })
+                        });
+                        const responseData = await response.json();
+                        if (responseData.success) {
+                            console.log('Total likes incremented successfully');
+                        } else {
+                            console.log('Failed to increment total likes:', responseData.message);
+                        }
+                    } catch (error) {
+                        console.error('Error incrementing total likes:', error);
+                    }
                 }
             }
         }
@@ -649,7 +178,7 @@ const MostLikedCaptions = () => {
         }
     }
 
-    const saveCaption = async(event, index) =>{
+    const saveCaption = async(event, captionId) =>{
         event.preventDefault();
         if(!isLoggedIn()){
             toast.warning("Please login")
@@ -657,7 +186,13 @@ const MostLikedCaptions = () => {
         }
 
         try{
-            const data = {caption:capArray[index].caption, userId:userId}
+            const caption = capArray.find(item => item._id === captionId);
+            if (!caption) {
+                console.error("Caption not found");
+                return false;
+            }
+
+            const data = {caption: caption.caption, userId: userId}
 
             const dataResponse = await fetch(SummaryApi.saveCaptions.url, {
                 method : SummaryApi.saveCaptions.method,
@@ -673,14 +208,17 @@ const MostLikedCaptions = () => {
             
             if(dataApi.success){
                 console.log(dataApi.message)
+                return true
             }
             if(dataApi.error){
                 console.log("Error while saving caption", dataApi.message)
+                return false
             }
-            return dataApi.success
+            return false
         } 
         catch(error){
         console.error("Error occurred in storing caption ", error)
+        return false
         }
     }
 
@@ -715,6 +253,18 @@ const MostLikedCaptions = () => {
         }
     }
 
+    // Handle page navigation with URL update
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        updatePageInUrl(newPage);
+    };
+
+    // Tag filter handler for react-select
+    const handleTagChange = (selected) => {
+        setCurrentPage(1); // Reset to first page on filter change
+        setSelectedTags(selected ? selected.map(option => option.value) : []);
+    };
+
 
   return (
     <section className='flex flex-col justify-center my-8'>
@@ -723,11 +273,75 @@ const MostLikedCaptions = () => {
             <p className='text-xl text-slate-700 dark:text-slate-300 text-[clamp(1rem,2vw,1.25rem)] w-[80%] sm:w-[60%] md:w-[55%] text-center p-4'>Discover the captions that captured the most hearts! These community favorites have resonated the most—whether it’s humor, inspiration, or creativity, they’ve left a mark.</p>
         </div>
 
+        {/* Tag Filter UI - react-select */} 
+        <div className='flex flex-wrap gap-2 justify-center mb-6'>
+            <div style={{ minWidth: 250, width: '40vw', maxWidth: 500 }}>
+                <Select
+                    isMulti
+                    className='bg-white dark:bg-[#121212]'
+                    name="tags"
+                    options={tagOptions}
+                    classNamePrefix="select"
+                    placeholder="Filter by tags..."
+                    value={tagOptions.filter(option => selectedTags.includes(option.value))}
+                    onChange={handleTagChange}
+                    styles={{
+                        menu: (provided) => ({
+                            ...provided,
+                            zIndex: 9999,
+                            backgroundColor: isDarkMode() ? '#18181b' : '#fff',
+                            color: isDarkMode() ? '#f3f4f6' : '#1e293b',
+                        }),
+                        control: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: isDarkMode() ? '#18181b' : '#fff',
+                            borderColor: state.isFocused
+                                ? (isDarkMode() ? '#903fcf' : '#903fcf')
+                                : (isDarkMode() ? '#334155' : '#cbd5e1'),
+                            boxShadow: state.isFocused ? '0 0 0 1px #903fcf' : provided.boxShadow,
+                            color: isDarkMode() ? '#f3f4f6' : '#1e293b',
+                        }),
+                        singleValue: (provided) => ({
+                            ...provided,
+                            color: isDarkMode() ? '#f3f4f6' : '#1e293b',
+                        }),
+                        multiValue: (provided) => ({
+                            ...provided,
+                            backgroundColor: isDarkMode() ? '#27272a' : '#e0e7ef',
+                            color: isDarkMode() ? '#f3f4f6' : '#1e293b',
+                        }),
+                        multiValueLabel: (provided) => ({
+                            ...provided,
+                            color: isDarkMode() ? '#f3f4f6' : '#1e293b',
+                        }),
+                        option: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: state.isSelected
+                                ? (isDarkMode() ? '#903fcf' : '#903fcf')
+                                : state.isFocused
+                                ? (isDarkMode() ? '#27272a' : '#f3f4f6')
+                                : (isDarkMode() ? '#18181b' : '#fff'),
+                            color: isDarkMode() ? '#f3f4f6' : '#1e293b',
+                            cursor: 'pointer',
+                        }),
+                        input: (provided) => ({
+                            ...provided,
+                            color: isDarkMode() ? '#f3f4f6' : '#1e293b',
+                        }),
+                        placeholder: (provided) => ({
+                            ...provided,
+                            color: isDarkMode() ? '#a1a1aa' : '#64748b',
+                        }),
+                    }}
+                />
+            </div>
+        </div>
+
         <div className='h-fit w-[57%] max-lg:w-[75%] max-sm:w-[90vw] border border-slate-600 rounded-lg p-4 mx-auto'>
             {/* <span className='pt-4 text-2xl font-bold text-gradient'><TypewriterText text="Most Liked Captions"/> </span> */}
             <div className='flex flex-col gap-4'>
                 {
-                capArray.length ? (
+                filteredAndSortedCaptions.length ? (
                     currentItems.map((data, index)=>{
                     return(
                         <motion.div key={index} initial={{y:-index*(175)}} 
@@ -742,7 +356,7 @@ const MostLikedCaptions = () => {
                             {
                                 data.tags.map((data, index)=>{
                                 return(
-                                    <span key={index} className='h-5 w-fit p-1 border border-slate-600 rounded flex justify-center items-center'>{data}</span>
+                                  <span key={index} className='h-5 w-fit p-1 border border-slate-600 rounded flex justify-center items-center'>{data}</span>
                                 )
                                 })
                             }
@@ -750,9 +364,9 @@ const MostLikedCaptions = () => {
                         </div>
                         <div className='flex justify-between max-sm:flex-row-reverse'>
                             <div className='flex gap-6 max-sm:hidden'>
-                            <i className='h-10 w-fit p-2 border border-slate-700 hover:text-white flex justify-center items-center text-lg rounded-lg hover:dark:bg-gray-700 cursor-pointer transition-all' onClick={(e)=>handleLike(e,index)}>
+                            <i className='h-10 w-fit p-2 border border-slate-700 hover:text-white flex justify-center items-center text-lg rounded-lg hover:dark:bg-gray-700 cursor-pointer transition-all' onClick={(e)=>handleLike(e,data._id)}>
                                 {
-                                likedIndex.includes(index) ? (<BiSolidLike/>) : (<BiLike/>)
+                                likedCaptions.has(data._id) ? (<BiSolidLike/>) : (<BiLike/>)
                                 }
                                 <AnimateNumber value={data.likeCount} length={index}/>
                             </i>
@@ -779,10 +393,12 @@ const MostLikedCaptions = () => {
             </div>
         </div>
 
+
+        {/* paging */}
         <div className="flex justify-center items-center gap-6 mt-10">
         {/* Prev Button */}
         <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
             className={`px-4 py-2 text-xl font-bold rounded-full transition-all duration-300
             ${
@@ -797,20 +413,18 @@ const MostLikedCaptions = () => {
         {/* Page Info */}
         <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
             Page <span className="text-blue-500">{currentPage}</span> of{' '}
-            {Math.ceil(capArray.length / itemsPerPage)}
+            {Math.ceil(filteredAndSortedCaptions.length / itemsPerPage)}
         </span>
 
         {/* Next Button */}
         <button
             onClick={() =>
-            setCurrentPage((prev) =>
-                Math.min(prev + 1, Math.ceil(capArray.length / itemsPerPage))
-            )
+            handlePageChange(Math.min(currentPage + 1, Math.ceil(filteredAndSortedCaptions.length / itemsPerPage)))
             }
-            disabled={currentPage === Math.ceil(capArray.length / itemsPerPage)}
+            disabled={currentPage === Math.ceil(filteredAndSortedCaptions.length / itemsPerPage) || filteredAndSortedCaptions.length === 0}
             className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-300
             ${
-                currentPage === Math.ceil(capArray.length / itemsPerPage)
+                currentPage === Math.ceil(filteredAndSortedCaptions.length / itemsPerPage) || filteredAndSortedCaptions.length === 0
                 ? 'bg-gray-300 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
                 : 'bg-[linear-gradient(288deg,_#903fcf_0%,_#cf0f3c_100%)] text-white hover:brightness-110 hover:shadow-lg cursor-pointer'
             }`}
