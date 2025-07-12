@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { Slide, ToastContainer} from 'react-toastify';
@@ -15,11 +15,21 @@ import MostLikedCaptions from './pages/MostLikedCaptions';
 import MyProfile from './pages/MyProfile';
 import EditProfile from './components/EditProfile';
 import ContactUs from './pages/ContactUs';
-
 // import lightBgImg from './assets/unused/bg-5.svg'
 import lightBgImg from './assets/unused/subtle-prism.svg'
 import darkBgImg from './assets/unused/subtle-prism.svg'
 import UserLikedCaptions from './pages/UserLikedCaptions';
+
+import ProtectedRoute from './helpers/ProtectedRoute';
+import PublicOnlyRoute from './helpers/PublicOnlyRoute';
+
+const Layout = () => {
+  return (
+    <div>
+      <Outlet/>
+    </div>
+  )
+};
 
 function App() {
 
@@ -39,6 +49,26 @@ function App() {
 
         <div className="flex-grow bg-transparent">
           <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/results" element={<Results />} />
+              <Route path="/contact-us" element={<ContactUs />} />
+            </Route>
+
+            <Route path="/signup" element={<PublicOnlyRoute> <SignUp /> </PublicOnlyRoute> } />
+            <Route path="/login" element={<PublicOnlyRoute> <Login /> </PublicOnlyRoute> } />
+          
+            <Route element={<ProtectedRoute> <Layout/> </ProtectedRoute>} >
+              <Route path="/most-liked-captions" element={<MostLikedCaptions />} />
+              <Route path="/my-profile" element={<MyProfile />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/user-liked-captions" element={<UserLikedCaptions />} />
+            </Route>
+          </Routes>
+
+          {/* <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
@@ -51,8 +81,8 @@ function App() {
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/user-liked-captions" element={<UserLikedCaptions />} />
 
-            {/* <Route path="/testing" element={<Test/>} /> */}
-          </Routes>
+            <Route path="/testing" element={<Test/>} /> 
+          </Routes> */}
         </div>
       </div>
       <Footer className="mt-auto" />
