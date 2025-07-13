@@ -11,6 +11,7 @@ import img1 from '../assets/carousel-item-1.png'
 import img2 from '../assets/carousel-item-2.jpg'
 import img3 from '../assets/carousel-item-3.png'
 import { FcGoogle } from "react-icons/fc";
+import GoogleLogin from '../components/GoogleLogin'
 
 
 const images = [imgwelcome, img2, img3, img1];
@@ -144,29 +145,22 @@ const SignUp = () => {
                         <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' />
                         {/* <button className='btn'> {loading ? "Creating" : "Create account"} </button> */}
                         
-                        <div className='w-full flex gap-4'>
-                            <div className='btn w-1/2 flex gap-2 items-center justify-center text-lg'>
-                                <i className='text-xl'><FcGoogle/></i>
-                                <spapn>Google</spapn>
-                            </div>
-                            { loading ? (
-                                <span className='btn w-1/2 text-center'>Creating...</span>
-                            ) : (
-                                <button className='btn w-1/2'>Create account</button>
-                            )}
-                        </div>
+                        { loading ? (
+                            <span className='btn w-full text-center'>Creating...</span>
+                        ) : (
+                            <button className='btn w-full'>Create account</button>
+                        )}
                     </form>
 
-                    {/* <div className='w-full flex flex-col items-center justify-center my-2'>
-                        <div className='h-[1px] bg-white'></div>
-                        <span>Or sign in using</span>
-                        <div className='h-[1px] bg-slate-600'></div>
+                    {/* Divider */}
+                    <div className='w-full flex items-center gap-4 my-2'>
+                        <div className='flex-1 h-[1px] bg-slate-300 dark:bg-slate-600'></div>
+                        <span className='opacity-75 text-sm'>or</span>
+                        <div className='flex-1 h-[1px] bg-slate-300 dark:bg-slate-600'></div>
                     </div>
-                    
-                    <button className='btn w-full flex gap-2 items-center justify-center text-lg'>
-                        <i><FcGoogle/></i>
-                        <spapn>Google</spapn>
-                    </button> */}
+
+                    {/* Google Login */}
+                    <GoogleLogin/>
                     
 
                     <span>Already have an account? <Link to='/login' className='active-link'><span className='hover:underline'>Log in</span></Link></span>

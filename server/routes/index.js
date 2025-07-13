@@ -17,6 +17,7 @@ const userLikedCaptions = require('../controller/caption/userLikedCaptions')
 const delCapFromUserController = require('../controller/caption/delCapFromUser')
 const forgotPasswordController = require('../controller/user/forgotPassword')
 const resetPasswordController = require('../controller/user/resetPassword')
+const googleAuthController = require('../controller/user/googleAuth')
 
 
 
@@ -24,6 +25,7 @@ const resetPasswordController = require('../controller/user/resetPassword')
 //user routes
 router.post('/signup', signUpController)
 router.post('/login', loginController)
+router.post('/auth/google', googleAuthController)
 router.post('/forgot-password', forgotPasswordController)
 router.post('/reset-password/:token', resetPasswordController)
 router.get('/user-details', userDetailsController)

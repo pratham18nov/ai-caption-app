@@ -10,6 +10,7 @@ import SummaryApi from '../helpers/SummaryApi'
 import { toast } from 'react-toastify'
 import { UserContext } from '../context/UserContext'
 import { FcGoogle } from 'react-icons/fc'
+import GoogleLogin from '../components/GoogleLogin'
 
 const Login = () => {
     const [loading, setLoading] = useState(false)
@@ -103,19 +104,22 @@ const Login = () => {
                         <Link to={'/forgot-password'} className='underline text-blue-400 text-right -mt-2 mb-2'>forgot password?</Link>
                         {/* <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' /> */}
                         
-                        <div className='w-full flex gap-4'>
-                            <div className='btn w-1/2 flex gap-2 items-center justify-center text-lg'>
-                                <i className='text-xl'><FcGoogle/></i>
-                                <spapn>Google</spapn>
-                            </div>
-                            { loading ? (
-                                <span className='btn w-1/2 text-center'>Logging in...</span>
-                            ) : (
-                                <button className='btn w-1/2'>Log In</button>
-                            )}
-                        </div>
-                        {/* <button className='btn'>{loading ? "Logging in ..." : "Log In"}</button> */}
+                        { loading ? (
+                            <span className='btn w-full text-center'>Logging in...</span>
+                        ) : (
+                            <button className='btn w-full'>Log In</button>
+                        )}
                     </form>
+
+                    {/* Divider */}
+                    <div className='w-full flex items-center gap-4 my-2'>
+                        <div className='flex-1 h-[1px] bg-slate-300 dark:bg-slate-600'></div>
+                        <span className='text-slate-500 dark:text-slate-400 text-sm'>or</span>
+                        <div className='flex-1 h-[1px] bg-slate-300 dark:bg-slate-600'></div>
+                    </div>
+
+                    {/* Google Login */}
+                    <GoogleLogin/>
 
                     <span>Don't have an account? <Link to='/signup' className='active-link'><span className='hover:underline'>Sign Up</span></Link></span>
                 </div>

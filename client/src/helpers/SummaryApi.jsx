@@ -12,6 +12,10 @@ const SummaryApi = {
         url: `${backendDomain}/api/login`,
         method: "POST" 
     },
+    googleAuth:{
+        url: `${backendDomain}/api/auth/google`,
+        method: "POST" 
+    },
     contactUs:{
         url: `${backendDomain}/api/contact-us`,
         method: "POST"
