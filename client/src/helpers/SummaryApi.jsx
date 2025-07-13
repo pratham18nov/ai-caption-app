@@ -1,5 +1,5 @@
 // const backendDomain = "http://localhost:8080"
-
+// deployed on render
 // const backendDomain = "https://pic-lingo-server.vercel.app"
 const backendDomain = "https://piclingo-eihw.onrender.com"
 
@@ -55,7 +55,15 @@ const SummaryApi = {
     incrementTotalLikes: {
         url: `${backendDomain}/api/increment-total-likes`,
         method: "POST"
-    }
+    },
+    forgotPassword:{
+        url: `${backendDomain}/api/forgot-password`,
+        method: "POST"
+    },
+    resetPassword:{
+        url: `${backendDomain}/api/reset-password`,
+        method: "POST"
+    },
 }
 
 export default SummaryApi

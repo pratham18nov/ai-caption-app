@@ -99,6 +99,7 @@ const Login = () => {
                             <i onClick={() => setShowPassword((prev) => !prev)} className='cursor-pointer absolute right-4'> {showPassword ? (<FaEyeSlash />) : (<FaEye />)}
                             </i>
                         </label>
+                        <Link to={'/forgot-password'} className='underline text-blue-400 text-right -mt-2 mb-2'>forgot password?</Link>
                         {/* <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' /> */}
                         { loading ? (
                             <span className='btn text-center'>Logging in...</span>

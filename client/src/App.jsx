@@ -22,6 +22,8 @@ import UserLikedCaptions from './pages/UserLikedCaptions';
 
 import ProtectedRoute from './helpers/ProtectedRoute';
 import PublicOnlyRoute from './helpers/PublicOnlyRoute';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const Layout = () => {
   return (
@@ -59,6 +61,8 @@ function App() {
 
             <Route path="/signup" element={<PublicOnlyRoute> <SignUp /> </PublicOnlyRoute> } />
             <Route path="/login" element={<PublicOnlyRoute> <Login /> </PublicOnlyRoute> } />
+            <Route path="/forgot-password" element={<PublicOnlyRoute> <ForgotPassword/> </PublicOnlyRoute>}/>
+            <Route path="/reset-password/:token" element={<PublicOnlyRoute> <ResetPassword/> </PublicOnlyRoute>}/>
           
             <Route element={<ProtectedRoute> <Layout/> </ProtectedRoute>} >
               <Route path="/most-liked-captions" element={<MostLikedCaptions />} />

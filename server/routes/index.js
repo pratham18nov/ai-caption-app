@@ -15,11 +15,17 @@ const incrementCaptionsGenerated = require('../controller/user/incrementCaptions
 const incrementTotalLikesController = require('../controller/user/incrementTotalLikes')
 const userLikedCaptions = require('../controller/caption/userLikedCaptions')
 const delCapFromUserController = require('../controller/caption/delCapFromUser')
+const forgotPasswordController = require('../controller/user/forgotPassword')
+const resetPasswordController = require('../controller/user/resetPassword')
+
+
 
 
 //user routes
 router.post('/signup', signUpController)
 router.post('/login', loginController)
+router.post('/forgot-password', forgotPasswordController)
+router.post('/reset-password/:token', resetPasswordController)
 router.get('/user-details', userDetailsController)
 // router.get('/user-details', authToken, userDetailsController)
 router.get("/user-logout", userLogoutController)

@@ -64,7 +64,10 @@ const userSchema = new mongoose.Schema({
                 message: 'Invalid Facebook URL'
             }
         }
-    }
+    },
+    
+    resetPasswordToken: String,
+    resetPasswordExpires: String
 }, {timestamps: true})
 
 const userModel = mongoose.model("User", userSchema)

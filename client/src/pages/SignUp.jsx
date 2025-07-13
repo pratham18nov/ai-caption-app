@@ -10,6 +10,8 @@ import imgwelcome from "../assets/welcome-1.jpg"
 import img1 from '../assets/carousel-item-1.png'
 import img2 from '../assets/carousel-item-2.jpg'
 import img3 from '../assets/carousel-item-3.png'
+import { FcGoogle } from "react-icons/fc";
+
 
 const images = [imgwelcome, img2, img3, img1];
 
@@ -147,6 +149,18 @@ const SignUp = () => {
                             <button className='btn'>Create account</button>
                         )}
                     </form>
+
+                    {/* <div className='w-full flex flex-col items-center justify-center my-2'>
+                        <div className='h-[1px] bg-white'></div>
+                        <span>Or sign in using</span>
+                        <div className='h-[1px] bg-slate-600'></div>
+                    </div>
+                    
+                    <button className='btn w-full flex gap-2 items-center justify-center text-lg'>
+                        <i><FcGoogle/></i>
+                        <spapn>Google</spapn>
+                    </button> */}
+                    
 
                     <span>Already have an account? <Link to='/login' className='active-link'><span className='hover:underline'>Log in</span></Link></span>
                 </div>
