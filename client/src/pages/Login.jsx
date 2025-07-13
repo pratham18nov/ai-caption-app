@@ -9,6 +9,7 @@ import imgWelcome from '../assets/welcome-2.jpg'
 import SummaryApi from '../helpers/SummaryApi'
 import { toast } from 'react-toastify'
 import { UserContext } from '../context/UserContext'
+import { FcGoogle } from 'react-icons/fc'
 
 const Login = () => {
     const [loading, setLoading] = useState(false)
@@ -101,11 +102,18 @@ const Login = () => {
                         </label>
                         <Link to={'/forgot-password'} className='underline text-blue-400 text-right -mt-2 mb-2'>forgot password?</Link>
                         {/* <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' /> */}
-                        { loading ? (
-                            <span className='btn text-center'>Logging in...</span>
-                        ) : (
-                            <button className='btn'>Log In</button>
-                        )}
+                        
+                        <div className='w-full flex gap-4'>
+                            <div className='btn w-1/2 flex gap-2 items-center justify-center text-lg'>
+                                <i className='text-xl'><FcGoogle/></i>
+                                <spapn>Google</spapn>
+                            </div>
+                            { loading ? (
+                                <span className='btn w-1/2 text-center'>Logging in...</span>
+                            ) : (
+                                <button className='btn w-1/2'>Log In</button>
+                            )}
+                        </div>
                         {/* <button className='btn'>{loading ? "Logging in ..." : "Log In"}</button> */}
                     </form>
 

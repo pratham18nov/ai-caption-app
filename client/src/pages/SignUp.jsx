@@ -143,11 +143,18 @@ const SignUp = () => {
                             {error && <p className='text-red-400 -mt-4 text-sm ml-2'>{error}</p>}
                         <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' />
                         {/* <button className='btn'> {loading ? "Creating" : "Create account"} </button> */}
-                        { loading ? (
-                            <span className='btn text-center'>Creating...</span>
-                        ) : (
-                            <button className='btn'>Create account</button>
-                        )}
+                        
+                        <div className='w-full flex gap-4'>
+                            <div className='btn w-1/2 flex gap-2 items-center justify-center text-lg'>
+                                <i className='text-xl'><FcGoogle/></i>
+                                <spapn>Google</spapn>
+                            </div>
+                            { loading ? (
+                                <span className='btn w-1/2 text-center'>Creating...</span>
+                            ) : (
+                                <button className='btn w-1/2'>Create account</button>
+                            )}
+                        </div>
                     </form>
 
                     {/* <div className='w-full flex flex-col items-center justify-center my-2'>

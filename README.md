@@ -39,82 +39,76 @@ PicLingo is a full-stack web app that converts images into inspirational quote-b
    ```bash
    git clone https://github.com/Prince-singh-1619/PicLingo.git
    cd PicLingo/backend
-Create a .env file:
 
-env
-Copy
-Edit
-FRONTEND_URL=https://pic-lingo.vercel.app
-MONGODB_URI=<your_mongodb_connection_string>
-Install dependencies:
+2. Create a .env file:
+  ```bash
+    FRONTEND_URL=https://pic-lingo.vercel.app
+    MONGODB_URI=<your_mongodb_connection_string>
+    TOKEN_SECRET_KEY="PUT-ANYTHING"
+    ADMIN_EMAIL='your@gmail.com'
+    ADMIN_EMAIL_PASSWORD='generate from your profile'
 
-bash
-Copy
-Edit
-npm install
-Start the server:
+3. Install dependencies:
+  ```bash
+    npm install
+    nodemon start
 
-bash
-Copy
-Edit
-npm start
-🧪 Test Login Route (Optional)
-bash
-Copy
-Edit
-curl -X POST http://localhost:8080/api/login \
-  -H "Content-Type: application/json" \
-  -d "{\"email\":\"test@example.com\", \"password\":\"123456\"}"
-💻 Frontend Setup
-Go to frontend folder:
+4. 💻 Frontend Setup
+  Go to frontend folder:
+  ```bash
+      cd ../frontend
+      npm install
+      npm run dev
 
-bash
-Copy
-Edit
-cd ../frontend
-Install dependencies:
 
-bash
-Copy
-Edit
-npm install
-Add environment variable:
+5. ⚙️ Deployment
+    🌐 Backend on Render
+      Connect your GitHub repo to Render
 
-ini
-Copy
-Edit
-REACT_APP_API_URL=https://your-backend.onrender.com/api
-Run the frontend:
+      Set:
+        Build Command: npm install
+        Start Command: npm start
+        Environment Variables:
+          FRONTEND_URL=https://pic-lingo.vercel.app
+          MONGODB_URI=<your_mongo_uri>
 
-bash
-Copy
-Edit
-npm start
-⚙️ Deployment
-🌐 Backend on Render
-Connect your GitHub repo to Render
+6. 📲 Frontend on Vercel
+    Push frontend to GitHub
+    Import to Vercel
 
-Set:
+7. 📁 Backend Structure
+  ```bash
+    /backend
+    ├── config/
+    │   └── db.js
+    ├── controllers/
+    │   └── auth.js
+    ├── models/
+    │   └── User.js
+    ├── routes/
+    │   └── index.js
+    ├── index.js
+    ├── package.json
+    └── .env
 
-Build Command: npm install
+8. ✨ Future Improvements
+  - Image-to-text using OpenAI Vision
+  - Real-time chat or community feed
+  - Bookmarking quotes
+  - User profile system
 
-Start Command: npm start
+9. 👨‍💻 Author & Contributors
+    🛠 Developed by
+      - Prince Singh
+      - GitHub: https://github.com/Prince-singh-1619
+      - Email: princesinghps1619@gmail.com
 
-Environment Variables:
+    🎨 Designed by
+      - Tabish Javed
+      - GitHub: https://github.com/tabish-27
+      - Email: tabishjaved2030@gmail.com
 
-FRONTEND_URL=https://pic-lingo.vercel.app
-
-MONGODB_URI=<your_mongo_uri>
-
-📲 Frontend on Vercel
-Push frontend to GitHub
-
-Import to Vercel
-
-Set environment variable:
-
-ini
-Copy
-Edit
-REACT_APP_API_URL=https://your-backend.onrender.com/api
-
+    🤖 Machine Learning by
+      - Pratham Harsh
+      - GitHub: https://github.com/pratham18nov
+      - Email: pratham18nov@gmail.com
