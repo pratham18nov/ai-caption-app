@@ -113,6 +113,7 @@ PicLingo is a full-stack web app that converts images into inspirational quote-b
   - User profile system
 
 9. 👨‍💻 Author & Contributors   
+
     🛠 Developed by
       - Prince Singh
       - GitHub: https://github.com/Prince-singh-1619
