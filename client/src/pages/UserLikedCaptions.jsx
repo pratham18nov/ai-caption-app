@@ -261,7 +261,7 @@ const UserLikedCaptions = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${authToken}` // Include this if your route is protected
                 },
-                credentials: 'include',
+                // credentials: 'include',
             });
 
             const result = await response.json();

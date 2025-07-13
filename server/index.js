@@ -19,11 +19,12 @@ app.use(cors(
     {
         // origin: 'https://pic-lingo.vercel.app',
         origin: process.env.FRONTEND_URL,
-        method: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         credentials: false,
         allowedHeaders: ['Content-Type', 'Authorization']
     }
 ))
+app.options('*', cors());  // Handle preflight OPTIONS
 app.use(express.json({ limit: "10mb" }))     //For handling JSON requests
 
 //DB connection
