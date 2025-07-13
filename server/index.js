@@ -18,9 +18,9 @@ connectDB()     //calling MongoDB
 app.use(cors(
     {
         // origin: 'https://pic-lingo.vercel.app',
-        origin: process.env.FRONTEND_URL,
+        origin: process.env.FRONTEND_URL || 'https://pic-lingo.vercel.app',
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        credentials: false,
+        // credentials: false,
         allowedHeaders: ['Content-Type', 'Authorization']
     }
 ))
