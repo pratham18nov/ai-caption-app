@@ -39,6 +39,7 @@ PicLingo is a full-stack web app that converts images into inspirational quote-b
    ```bash
    git clone https://github.com/Prince-singh-1619/PicLingo.git
    cd PicLingo/backend
+   ```
 
 2. Create a .env file:
   ```bash
@@ -47,34 +48,45 @@ PicLingo is a full-stack web app that converts images into inspirational quote-b
     TOKEN_SECRET_KEY="PUT-ANYTHING"
     ADMIN_EMAIL='your@gmail.com'
     ADMIN_EMAIL_PASSWORD='generate from your profile'
+  ```
 
 3. Install dependencies:
   ```bash
     npm install
     nodemon start
+  ```
 
-4. 💻 Frontend Setup
-  Go to frontend folder:
+--- 
+
+### 💻 Frontend Setup
+4. Go to frontend folder:
   ```bash
       cd ../frontend
       npm install
       npm run dev
+  ```
 
+--- 
 
-5. ⚙️ Deployment
-    🌐 Backend on Render
+### ⚙️ Deployment
+
+5. 🌐 Backend on Render
       Connect your GitHub repo to Render
 
       Set:
         Build Command: npm install
         Start Command: npm start
         Environment Variables:
+        ```bash
           FRONTEND_URL=https://pic-lingo.vercel.app
           MONGODB_URI=<your_mongo_uri>
+        ```
 
 6. 📲 Frontend on Vercel
     Push frontend to GitHub
     Import to Vercel
+
+---
 
 7. 📁 Backend Structure
   ```bash
@@ -90,6 +102,9 @@ PicLingo is a full-stack web app that converts images into inspirational quote-b
     ├── index.js
     ├── package.json
     └── .env
+  ```
+
+---
 
 8. ✨ Future Improvements
   - Image-to-text using OpenAI Vision
