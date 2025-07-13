@@ -74,7 +74,6 @@ const Results = () => {
                         'Authorization': `Bearer ${authToken}`,
                         'Content-Type': 'application/json'
                     },
-                    credentials: 'include',
                     body: JSON.stringify({ userId: userId })
                 });
                 const responseData = await response.json();
@@ -106,7 +105,6 @@ const Results = () => {
 
       const dataResponse = await fetch(SummaryApi.saveCaptions.url, {
         method : SummaryApi.saveCaptions.method,
-        credentials: "include",
         headers: {
           'Authorization': `Bearer ${authToken}`,
           "Content-Type" : "application/json"
@@ -199,7 +197,6 @@ const Results = () => {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
           },
-          credentials: 'include',
           body: JSON.stringify({ userId: user._id })
         });
         const responseData = await response.json();

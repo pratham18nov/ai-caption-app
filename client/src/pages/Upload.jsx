@@ -80,7 +80,6 @@ const Upload = () => {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
           },
-          credentials: 'include',
           body: JSON.stringify({ userId: user._id })
         });
 

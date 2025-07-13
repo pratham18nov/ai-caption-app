@@ -24,8 +24,7 @@ const Header = () => {
     localStorage.clear();
 
     const fetchData = await fetch(SummaryApi.userLogout.url, {
-      method: SummaryApi.userLogout.method,
-      credentials: "include"
+      method: SummaryApi.userLogout.method
     })
     const data = await fetchData.json()
 

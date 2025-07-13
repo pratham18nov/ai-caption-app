@@ -70,7 +70,6 @@ const MostLikedCaptions = () => {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
           },
-          credentials: 'include',
       })
       const responseData = await response.json()
       if(responseData.success){
@@ -158,7 +157,6 @@ const MostLikedCaptions = () => {
                                 'Authorization': `Bearer ${authToken}`,
                                 'Content-Type': 'application/json'
                             },
-                            credentials: 'include',
                             body: JSON.stringify({ userId: userId })
                         });
                         const responseData = await response.json();
@@ -196,7 +194,6 @@ const MostLikedCaptions = () => {
 
             const dataResponse = await fetch(SummaryApi.saveCaptions.url, {
                 method : SummaryApi.saveCaptions.method,
-                credentials: "include",
                 headers: {
                 'Authorization': `Bearer ${authToken}`,
                 "content-type" : "application/json"

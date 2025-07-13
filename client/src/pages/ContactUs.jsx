@@ -29,7 +29,6 @@ const ContactUs = () => {
     try {
       const response = await fetch(SummaryApi.contactUs.url, {
         method: SummaryApi.contactUs.method,
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

@@ -72,7 +72,6 @@ const UserLikedCaptions = () => {
             headers: {
             'Authorization': `Bearer ${authToken}`,
             },
-            credentials: 'include',
         })
         const responseData = await response.json()
         if(responseData.success){

@@ -152,7 +152,6 @@ const EditProfile = ( {open, onClose} ) => {
 
       const response = await fetch(SummaryApi.updateProfile.url, {
         method: SummaryApi.updateProfile.method,
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           "Authorization" : `Bearer ${token}`,
