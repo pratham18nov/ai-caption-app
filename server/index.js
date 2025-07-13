@@ -15,16 +15,12 @@ const PORT = process.env.PORT || 8080
 connectDB()     //calling MongoDB
 
 //middlewares
-app.use(cors(
-    {
-        // origin: 'https://pic-lingo.vercel.app',
-        origin: process.env.FRONTEND_URL || 'https://pic-lingo.vercel.app',
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        // credentials: false,
-        allowedHeaders: ['Content-Type', 'Authorization']
-    }
-))
-app.options('*', cors());  // Handle preflight OPTIONS
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
+}));
+app.options('*', cors());
 app.use(express.json({ limit: "10mb" }))     //For handling JSON requests
 
 //DB connection
@@ -38,7 +34,7 @@ mongoose.connect(process.env.MONGODB_URI,
     .catch(err => console.error("MongoDB connection error: ", err))
 
 
-app.use("/api", router)
+app.use('/api', router)
 
 //start server
 app.listen(PORT, ()=>{
