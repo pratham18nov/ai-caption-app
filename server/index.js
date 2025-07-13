@@ -21,8 +21,9 @@ app.use(cors(
         // origin: '*',
         origin: process.env.FRONTEND_URL,
         // credentials: true,
-        method: ["GET", "POST", "PUT", "DELETE"],
-        credentials: false
+        method: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        credentials: false,
+        allowedHeaders: ['Content-Type', 'Authorization']
     }
 ))
 app.use(express.json({ limit: "10mb" }))     //For handling JSON requests
