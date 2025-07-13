@@ -40,29 +40,35 @@ const Login = () => {
 
         console.log("The input data is: ", data)
         // console.log("The input data is: ", data)
-
-        const dataResponse = await fetch(SummaryApi.login.url, {
-            method: SummaryApi.login.method,
-            // credentials: "include",
-            headers: {
-                "content-type" : "application/json",
-            },
-            body: JSON.stringify(data)
-        })
-        const dataApi = await dataResponse.json()
-        console.log("dataApilogin", dataApi)
-        if(dataApi.success){
-            console.log("fetched data", dataApi)
-            localStorage.setItem("authToken", dataApi.token) 
-            localStorage.setItem("userData", JSON.stringify(dataApi.userData));
-            toast.success(dataApi.message)
-            navigate(from, {replace: true})
-            // navigate('/login', { state: { from: location } })
+        try {
+           const dataResponse = await fetch(SummaryApi.login.url, {
+                method: SummaryApi.login.method,
+                // credentials: "include",
+                headers: {
+                    "content-type" : "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+            const dataApi = await dataResponse.json()
+            console.log("dataApilogin", dataApi)
+            if(dataApi.success){
+                console.log("fetched data", dataApi)
+                localStorage.setItem("authToken", dataApi.token) 
+                localStorage.setItem("userData", JSON.stringify(dataApi.userData));
+                toast.success(dataApi.message)
+                navigate(from, {replace: true})
+                // navigate('/login', { state: { from: location } })
+            }
+            if(dataApi.error){
+                toast.error(dataApi.message)
+            } 
+        } 
+        catch (error) {
+            console.log("Error occured in login", error)
         }
-        if(dataApi.error){
-            toast.error(dataApi.message)
+        finally{
+            setLoading(false)
         }
-        setLoading(false)
     }
 
 
@@ -94,7 +100,12 @@ const Login = () => {
                             </i>
                         </label>
                         {/* <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' /> */}
-                        <button className='btn'>{loading ? "Logging in ..." : "Log In"}</button>
+                        { loading ? (
+                            <span className='btn text-center'>Logging in...</span>
+                        ) : (
+                            <button className='btn'>Log In</button>
+                        )}
+                        {/* <button className='btn'>{loading ? "Logging in ..." : "Log In"}</button> */}
                     </form>
 
                     <span>Don't have an account? <Link to='/signup' className='active-link'><span className='hover:underline'>Sign Up</span></Link></span>

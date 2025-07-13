@@ -140,7 +140,12 @@ const SignUp = () => {
                         </label>
                             {error && <p className='text-red-400 -mt-4 text-sm ml-2'>{error}</p>}
                         <input placeholder='confirm password' type='password' name='confirmPassword' required value={data.confirmPassword} onChange={handleOnChange} className='input-field' />
-                        <button className='btn'> {loading ? "Creating" : "Create account"} </button>
+                        {/* <button className='btn'> {loading ? "Creating" : "Create account"} </button> */}
+                        { loading ? (
+                            <span className='btn text-center'>Creating...</span>
+                        ) : (
+                            <button className='btn'>Create account</button>
+                        )}
                     </form>
 
                     <span>Already have an account? <Link to='/login' className='active-link'><span className='hover:underline'>Log in</span></Link></span>
