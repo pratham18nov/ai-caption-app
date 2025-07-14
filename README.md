@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📸 PicLingo
 
 PicLingo is a full-stack web app that converts images into inspirational quote-based content using AI. Users can sign up, upload an image, and receive a quote generated from the image content. Built with a React frontend and Express.js + MongoDB backend.
@@ -128,3 +129,7 @@ PicLingo is a full-stack web app that converts images into inspirational quote-b
       - Pratham Harsh
       - GitHub: https://github.com/pratham18nov
       - Email: pratham18nov@gmail.com
+=======
+# ai-caption-app
+An AI generated caption generator for social media 
+>>>>>>> 99206776b3562adeb640f44ed2f78828131a0205
