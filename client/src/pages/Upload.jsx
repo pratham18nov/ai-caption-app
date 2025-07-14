@@ -108,7 +108,7 @@ const Upload = () => {
         invertedColor,
         results: data.results
       });
-  tus
+  
       navigate('/results', {
         state: {
           image: imageArray,
