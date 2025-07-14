@@ -63,18 +63,34 @@ const Upload = () => {
   }
   
 
-  const genCaps = async() =>{
-    setLoading(true)
-    // const captions = await GenerateCaptions(imageArray)
-    // const captions = await GenerateCaptions(imageArray, mood)
-
-    // Update upload count if user is logged in
+  const genCaps = async () => {
+    setLoading(true);
+  
     try {
+      console.log("📤 Preparing to send image to backend...");
+  
+      const formData = new FormData();
+      const file = await fetch(imageArray).then(res => res.blob()); // convert base64 to blob
+      formData.append("image", file, "upload.jpg");
+  
+      console.log("📡 Sending POST request to http://localhost:5000/api/match");
+  
+      const response = await fetch("http://127.0.0.1:5000/api/match", {
+        method: "POST",
+        body: formData
+      });
+  
+      if (!response.ok) throw new Error("❌ Failed to get captions");
+  
+      const data = await response.json();
+      console.log("✅ Received response:", data);
+  
+      // update upload count if user is logged in
       if (isLoggedIn()) {
         const user = JSON.parse(localStorage.getItem("userData"));
         const authToken = localStorage.getItem("authToken");
-        
-        const response = await fetch(SummaryApi.updateUploadCount.url, {
+  
+        await fetch(SummaryApi.updateUploadCount.url, {
           method: SummaryApi.updateUploadCount.method,
           headers: {
             'Authorization': `Bearer ${authToken}`,
@@ -82,22 +98,34 @@ const Upload = () => {
           },
           body: JSON.stringify({ userId: user._id })
         });
-
-        const responseData = await response.json();
-        if (responseData.success) {
-          console.log('Upload count updated successfully');
-        } else {
-          console.log('Failed to update upload count:', responseData.message);
-        }
       }
-    } 
-    catch (error) {
-      console.error('Error updating upload count:', error);
-    }
+  
+      // Navigate to result page with received data
+      
+      console.log("🛫 Navigating to results with:", {
+        image: imageArray,
+        dominantColor,
+        invertedColor,
+        results: data.results
+      });
+  tus
+      navigate('/results', {
+        state: {
+          image: imageArray,
+          dominantColor,
+          invertedColor,
+          results: data.results
+        }
+      });
 
-    navigate('/results', {state: {image: imageArray, dominantColor:dominantColor, invertedColor:invertedColor}})
-    setLoading(false)
-  }
+    } catch (err) {
+      console.error("⚠️ Caption generation failed:", err);
+      toast.error("Failed to generate captions. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   
   return (
     <section className='h-full w-full flex flex-col jutify-center gap-2 items-center py-15'>
@@ -146,7 +174,7 @@ const Upload = () => {
         </div>
 
         {/* color spill */}
-        {imageArray[0] && <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
+        {imageArray && <div className="absolute -inset-15 blur-3xl opacity-25 -z-10 rounded-lg" style={{backgroundColor:dominantColor||'transparent', transition:'background-color 2s ease'}}> </div> }
 
 
         <button className='w-84 max-sm:w-70 text-center mt-8' style={imageArray.length !== 0 ? { borderRadius: '12px', boxShadow: `0px 0px 10px 0px ${invertedColor}, inset 0px 0px 20px 0px ${invertedColor}` } : {}} >

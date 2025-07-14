@@ -16,7 +16,8 @@ import GenerateCaptions from '../components/GenerateCaptions';
 const Results = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const {image, dominantColor,  invertedColor} = location.state || {}
+  const { image, dominantColor, invertedColor, results = [] } = location.state || {};
+
   // console.log('image Received', image)
 
   const [loading, setLoading] = useState(false)
@@ -215,29 +216,12 @@ const Results = () => {
   }
 
   const keywordsArray = [ "Mountain", "cloud", "Rooftop", "Rain", "Travel", "Happy" ]
-  const capArray = [
-    {
-      id: '1',
-      title: "A serene mountain landscape with a crystal clear lake reflecting the snow-capped peaks",
-    },
-    {
-      id: '2',
-      title: "Majestic mountains rising above a tranquil alpine lake at sunset",
-    },
-    {
-      id: '3',
-      title: "Nature's mirror: perfect mountain reflections in a pristine lake",
-    },
-    {
-      id: '4',
-      title: "Breathtaking view of mountain ranges surrounding a peaceful lake",
-    },
-    {
-      id: '5',
-      title: "The calm waters of a mountain lake perfectly mirroring the surrounding peaks",
-    },
-  ]
-
+  const capArray = results.map((item, index) => ({
+    id: String(index + 1),
+    title: item[0],  // caption text
+    score: item[1]   // similarity score (optional to show)
+  }));
+  
 
   return (
     <section className='w-full flex flex-col jutify-center gap-2 items-center py-15'>
