@@ -4,3 +4,4 @@ torchvision
 pandas
 scikit-learn
 transformers
+gunicorn
